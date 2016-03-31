@@ -1,0 +1,24 @@
+{
+  "name": "dose",
+  "authors": [
+    "daniellelara <daniellelaragourgey@gmail.com>"
+  ],
+  "description": "",
+  "main": "",
+  "moduleType": [],
+  "license": "MIT",
+  "homepage": "",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "js/vendor",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bluebird": "^3.3.4",
+    "angular-jwt": "^0.0.9",
+    "satellizer": "^0.14.0"
+  }
+}

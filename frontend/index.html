@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html ng-app="dose">
+<head>
+  <title>Dose Tools</title>
+  <script src="http://localhost:3000/socket.io/socket.io.js" charset="utf-8"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.2/angular.min.js"></script>
+  
+  <script src="/js/vendor/angular-resource/angular-resource.min.js"></script>
+  <script type="text/javascript" src="/js/vendor/satellizer/satellizer.min.js"></script>
+  
+  <script src="/js/vendor/angular-jwt/dist/angular-jwt.min.js"></script>
+
+  <script src="/js/vendor/bluebird/js/browser/bluebird.min.js"></script>
+
+  <script src="/js/app.js" charset="utf-8"></script>
+  <script src="/js/services/transport.js" charset="utf-8"></script>
+  <script src="/js/controllers/user.js" charset="utf-8"></script>
+  <script src="/js/services/oauthKeys.js" charset="utf-8"></script>
+  <script src="/js/services/token.js" charset="utf-8"></script>
+
+  <script src="/js/services/location.js" charset="utf-8"></script>
+  <script src="/js/controllers/main.js" charset="utf-8"></script>
+  
+  <script src="/js/directives/transport.js" charset="utf-8"></script>
+  <script src="/js/directives/weather.js" charset="utf-8"></script>
+  <script src="/js/services/weather2.js" charset="utf-8"></script>
+ 
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+
+</head>
+<body ng-controller="UserController as user" >
+<div ng-controller="MainController as main">
+<p> {{ user.temperature }} </p>
+<div ng-hide="main.isLoggedIn()">
+  <h1>Dose</h1>
+  <h3>Facebook &amp; Github sign in</h3>
+  <hr>
+  <button class="facebook" ng-click="main.authenticate('facebook')"><i class="fa fa-facebook-square"></i> Sign in with Facebook</button>
+  <button ng-click="main.authenticate('github')" class="github"><i class="fa fa-github-square"></i> Sign in with Github</button>
+</div>
+
+<div ng-show="main.isLoggedIn()">
+  <img ng-src="{{ main.currentUser.picture }}">
+  <h2>{{ main.currentUser.name }}</h2>
+  <hr>
+  <button class="logout" ng-click="main.logout()"><i class="fa fa-sign-out"></i> Logout</button>
+</div>
+
+<div class="dg-weather" dg-data="user.temperature"></div>
+
+<div class="dg-transport" dg-data="user.status"></div>
+</div>
+</body>
+</html>
