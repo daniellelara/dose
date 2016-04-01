@@ -14,5 +14,9 @@ function oauthConfig(API_URL, $authProvider, FACEBOOK_API_KEY, GITHUB_API_KEY) {
     clientId: GITHUB_API_KEY
   })
 
+  $authProvider.httpInterceptor = function(config) {
+    return !!config.url.match(API_URL);
+  };
+
   $authProvider.tokenPrefix = null;
 }

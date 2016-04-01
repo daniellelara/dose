@@ -25,15 +25,15 @@ function UserController(weather, $window, $scope, Transport, Word, Video) {
   //ted video
   this.video = null;
 
-  //youtube ted channel call
+  // youtube ted channel call
   Video.get().then(function(res){
     $scope.$applyAsync(function(){
-        self.video = res.data.items[0].id.videoId;
-        console.log(self.video);
-        });
+      self.video = res.data.items[0].id.videoId;
+      console.log(self.video);
+    });
   })
 
-  //line status call
+  // line status call
   Transport.get().then(function(res){
   $scope.$applyAsync(function(){
     self.status = res.data[1].lineStatuses[0].statusSeverityDescription
@@ -41,10 +41,10 @@ function UserController(weather, $window, $scope, Transport, Word, Video) {
     });
   })  
 
-  //word of the day
- Word.get().then(function(res){
-  $scope.$applyAsync(function(){
-    self.word = res.data;
+ //word of the day
+  Word.get().then(function(res){
+    $scope.$applyAsync(function(){
+      self.word = res.data;
     });
   })
 

@@ -28,36 +28,37 @@
   <script src="/js/directives/clock.js" charset="utf-8"></script>
   <script src="/js/directives/weather.js" charset="utf-8"></script>
   <script src="/js/services/weather.js" charset="utf-8"></script>
- 
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+  <link rel="stylesheet" type="text/css" href="/css/app.css">
 
 </head>
-<body ng-controller="UserController as user" >
-<div ng-controller="MainController as main">
-<div ng-hide="main.isLoggedIn()">
-  <h1>Dose</h1>
-  <h3>Facebook &amp; Github sign in</h3>
-  <hr>
-  <button class="facebook" ng-click="main.authenticate('facebook')"><i class="fa fa-facebook-square"></i> Sign in with Facebook</button>
-  <button ng-click="main.authenticate('github')" class="github"><i class="fa fa-github-square"></i> Sign in with Github</button>
-</div>
+<body ng-controller="UserController as user">
+  <div ng-controller="MainController as main">
+  <header>
+    <div ng-hide="main.isLoggedIn()">
+      <h1>Dose</h1>
+      <h3>Facebook &amp; Github sign in</h3>
+      <hr>
+      <button class="facebook" ng-click="main.authenticate('facebook')"><i class="fa fa-facebook-square"></i> Sign in with Facebook</button>
+      <button ng-click="main.authenticate('github')" class="github"><i class="fa fa-github-square"></i> Sign in with Github</button>
+    </div>
 
-<div ng-show="main.isLoggedIn()">
-  <img ng-src="{{ main.currentUser.picture }}">
-  <h2>{{ main.currentUser.name }}</h2>
-  <hr>
-  <button class="logout" ng-click="main.logout()"><i class="fa fa-sign-out"></i> Logout</button>
-</div>
-<section ng-show="main.isLoggedIn()">
-  <div class="dg-weather" dg-data="user.temperature"></div>
-  <div class="dg-word" dg-data="user.word"></div>
-  <div class="dg-transport" dg-data="user.status"></div>
-  <div class="dg-video" dg-data="user.video"></div>
-  <div class="dg-clock"></div>
-</section>  
-
-
-</script>
-</div>
+    <div ng-show="main.isLoggedIn()">
+      <img ng-src="{{ main.currentUser.picture }}">
+      <p class="name">{{ main.currentUser.name }}</p>
+      <button class="logout name" ng-click="main.logout()"><i class="fa fa-sign-out"></i> Logout</button>
+    </div>
+  </header>
+    <section>
+    <div class="container">
+      <div class="dg-weather col-md-3 tile" dg-data="user.temperature"></div>
+      <div class="dg-word col-md-6 tile" dg-data="user.word"></div>
+      <div class="dg-transport col-md-3 tile info" dg-data="user.status"></div>
+      <div class="dg-video col-md-8 tile info" dg-data="user.video"></div>
+      <div class="dg-clock col-md-4 tile info"></div>
+    </div>
+    </section>
+  </div>
 </body>
 </html>
