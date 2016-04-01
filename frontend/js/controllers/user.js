@@ -1,9 +1,9 @@
 angular.module('dose')
   .controller('UserController', UserController);
 
-UserController.$inject = ['weather2', '$window', '$scope', 'Transport'];
+UserController.$inject = ['weather', '$window', '$scope', 'Transport', 'Word', 'Video'];
 
-function UserController(weather2, $window, $scope, Transport) {
+function UserController(weather, $window, $scope, Transport, Word, Video) {
   var socket = $window.io("http://localhost:3000");
   console.log(socket);
 
@@ -13,19 +13,43 @@ function UserController(weather2, $window, $scope, Transport) {
 
   var self = this;
 
+  //for geolocation
   this.lat = 0;
   this.lon = 0;
+  //for weather
   this.temperature = 2;
-  this.status = null
-  
+  //for tfl
+  this.status = null;
+  //for wod of the day
+  this.word = null;
+  //ted video
+  this.video = null;
+
+  //youtube ted channel call
+  Video.get().then(function(res){
+    $scope.$applyAsync(function(){
+        self.video = res.data.items[0].id.videoId;
+        console.log(self.video);
+        });
+  })
+
+  //line status call
   Transport.get().then(function(res){
   $scope.$applyAsync(function(){
     self.status = res.data[1].lineStatuses[0].statusSeverityDescription
     console.log(self.status);
     });
+  })  
+
+  //word of the day
+ Word.get().then(function(res){
+  $scope.$applyAsync(function(){
+    self.word = res.data;
+    });
   })
 
-  weather2.get().then(function(res) {
+  //weather call 
+  weather.get().then(function(res) {
     $scope.$applyAsync(function(){
       self.temperature = res.data.list[0].temp.day;
     });

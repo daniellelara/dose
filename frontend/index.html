@@ -17,20 +17,23 @@
   <script src="/js/controllers/user.js" charset="utf-8"></script>
   <script src="/js/services/oauthKeys.js" charset="utf-8"></script>
   <script src="/js/services/token.js" charset="utf-8"></script>
-
+  <script src="/js/services/word.js" charset="utf-8"></script>
+  <script src="/js/services/video.js" charset="utf-8"></script>
   <script src="/js/services/location.js" charset="utf-8"></script>
   <script src="/js/controllers/main.js" charset="utf-8"></script>
   
+  <script src="/js/directives/video.js" charset="utf-8"></script>
   <script src="/js/directives/transport.js" charset="utf-8"></script>
+  <script src="/js/directives/word.js" charset="utf-8"></script>
+  <script src="/js/directives/clock.js" charset="utf-8"></script>
   <script src="/js/directives/weather.js" charset="utf-8"></script>
-  <script src="/js/services/weather2.js" charset="utf-8"></script>
+  <script src="/js/services/weather.js" charset="utf-8"></script>
  
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
 
 </head>
 <body ng-controller="UserController as user" >
 <div ng-controller="MainController as main">
-<p> {{ user.temperature }} </p>
 <div ng-hide="main.isLoggedIn()">
   <h1>Dose</h1>
   <h3>Facebook &amp; Github sign in</h3>
@@ -45,10 +48,16 @@
   <hr>
   <button class="logout" ng-click="main.logout()"><i class="fa fa-sign-out"></i> Logout</button>
 </div>
+<section ng-show="main.isLoggedIn()">
+  <div class="dg-weather" dg-data="user.temperature"></div>
+  <div class="dg-word" dg-data="user.word"></div>
+  <div class="dg-transport" dg-data="user.status"></div>
+  <div class="dg-video" dg-data="user.video"></div>
+  <div class="dg-clock"></div>
+</section>  
 
-<div class="dg-weather" dg-data="user.temperature"></div>
 
-<div class="dg-transport" dg-data="user.status"></div>
+</script>
 </div>
 </body>
 </html>
