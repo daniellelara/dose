@@ -17,7 +17,7 @@ function UserController(weather, $window, $scope, Transport, Word, Video) {
   this.lat = 0;
   this.lon = 0;
   //for weather
-  this.temperature = 2;
+  this.temperature = {};
   //for tfl
   this.status = null;
   //for wod of the day
@@ -51,7 +51,11 @@ function UserController(weather, $window, $scope, Transport, Word, Video) {
   //weather call 
   weather.get().then(function(res) {
     $scope.$applyAsync(function(){
-      self.temperature = res.data.list[0].temp.day;
+      self.temperature = {
+        temp: res.temp.day,
+        description: res.weather[0].description,
+        icon: res.weather[0].icon
+      }
     });
   });
 

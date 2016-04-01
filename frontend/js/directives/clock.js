@@ -6,7 +6,7 @@ function Clock() {
     restrict: 'C',
     scope: { dgData:'=' },
     replace: true,
-    template: '<canvas id="canvas" width="200" height="200" style="background-color:#333"></canvas>',
+    template: '<canvas id="canvas" width="200" height="200"></canvas>',
     link: function(scope, element, attr) {
       var canvas = document.getElementById("canvas");
       var ctx = canvas.getContext("2d");
@@ -17,7 +17,7 @@ function Clock() {
 
       function drawClock() {
         ctx.arc(0, 0, radius, 0 , 2*Math.PI);
-        ctx.fillStyle = "white";
+        ctx.fillStyle = 'rgba(255, 255, 255, 0.5)';
         ctx.fill();
         drawFace(ctx, radius);
         drawNumbers(ctx, radius);
@@ -28,7 +28,7 @@ function Clock() {
 
         ctx.beginPath();
         ctx.arc(0, 0, radius, 0, 2*Math.PI);
-        ctx.fillStyle = 'white';
+        ctx.fillStyle = 'rgba(255, 255, 255, 0.5)';
         ctx.fill();
 
         grad = ctx.createRadialGradient(0,0,radius*0.95, 0,0,radius*1.05);
@@ -47,7 +47,7 @@ function Clock() {
       function drawNumbers(ctx, radius) {
         var ang;
         var num;
-        ctx.font = radius*0.15 + "px arial";
+        ctx.font = radius*0.15 + "px helvetica";
         ctx.textBaseline="middle";
         ctx.textAlign="center";
         for(num= 1; num < 13; num++){
