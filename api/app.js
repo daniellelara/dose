@@ -25,9 +25,9 @@ app.use('/', router);
 
 io.on('connect', function(socket){
   console.log("User connected with socket id of:" + socket.conn.id);
-  socket.on('temperature', function(temperature){
-    console.log(temperature);
-    io.emit('temperature', temperature);
+  socket.on('note', function(note){
+    console.log("notes", note);
+    io.emit('note', note);
     
   });
 });

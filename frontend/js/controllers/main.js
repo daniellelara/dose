@@ -2,8 +2,8 @@ angular
   .module('dose')
   .controller('MainController', MainController);
 
-MainController.$inject = ['$auth', 'tokenService'];
-function MainController($auth, tokenService) {
+MainController.$inject = ['$auth', 'tokenService', '$http', 'API'];
+function MainController($auth, tokenService, $http, API) {
 
   var self = this;
 
@@ -23,6 +23,19 @@ function MainController($auth, tokenService) {
   this.logout = function() {
     tokenService.removeToken();
     this.currentUser = null;
+  }
+
+  this.addTool = function(tool) {
+    $http.patch(API + '/' + self.currentUser._id, tool)
+         .then(function(res) {
+            console.log(tool);
+          });
+  }
+  this.deleteTool = function(tool) {
+    $http.delete(API + '/' + self.currentUser._id, tool)
+         .then(function(res) {
+            console.log(tool);
+          });
   }
 
 }

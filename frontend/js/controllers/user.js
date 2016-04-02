@@ -25,6 +25,10 @@ function UserController(weather, $window, $scope, Transport, Word, Video) {
   //ted video
   this.video = null;
 
+  //notes
+  self.notes =[];
+  self.note = null;
+
   // youtube ted channel call
   Video.get().then(function(res){
     $scope.$applyAsync(function(){
@@ -71,10 +75,17 @@ function UserController(weather, $window, $scope, Transport, Word, Video) {
     });
   });
 
- // socket.on('temperature', function(temperature){
- //   $scope.$applyAsync(function(){
- //     self.temperature = temperature;
- //   })
+ socket.on('note', function(note){
+   $scope.$applyAsync(function(){
+     self.notes.push(note);
+     console.log(note);
+   })
    
- // })
+ })
+
+ self.sendNote = function(user) {
+   socket.emit('note', { note: self.note, user: user})
+  
+   self.note = null;
+ }
 }

@@ -1,6 +1,7 @@
 var router = require('express').Router();
 var jwt = require('jsonwebtoken');
 var authenticationController = require('../controllers/authentication');
+var usersController = require('../controllers/users');
 var secret = require('../config/app').secret;
 var multer = require('multer');
 var s3 = require('multer-s3');
@@ -46,6 +47,8 @@ var upload = multer({
     }
   })
 });
+router.patch('/users/:id', usersController.updateOne);
+router.delete('/users/:id', usersController.deleteOne);
 
 router.post('/register', authenticationController.register);
 router.post('/login', authenticationController.login);

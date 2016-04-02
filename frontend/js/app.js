@@ -1,6 +1,7 @@
-angular.module('dose',  ['ngResource', 'satellizer', 'angular-jwt'])
+angular.module('dose',  ['ngResource', 'satellizer', 'angular-jwt', 'gridster'])
   .constant('API_URL', 'http://localhost:3000')
   .constant('YT', 'https://www.googleapis.com/youtube/v3/search')
+  .constant('API', 'http://localhost:3000/users')
   .config(oauthConfig);
 
 oauthConfig.$inject = ['API_URL', '$authProvider', 'FACEBOOK_API_KEY', 'GITHUB_API_KEY'];

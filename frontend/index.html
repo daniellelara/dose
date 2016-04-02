@@ -4,15 +4,27 @@
   <title>Dose Tools</title>
   <script src="http://localhost:3000/socket.io/socket.io.js" charset="utf-8"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.2/angular.min.js"></script>
-  
+  <!-- angular -->
   <script src="/js/vendor/angular-resource/angular-resource.min.js"></script>
-  <script type="text/javascript" src="/js/vendor/satellizer/satellizer.min.js"></script>
-  
-  <script src="/js/vendor/angular-jwt/dist/angular-jwt.min.js"></script>
 
+  <!-- for gridster -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+  <link rel="stylesheet" href="/js/vendor/angular-gridster/dist/angular-gridster.min.css"/>
+  <script src="/js/vendor/javascript-detect-element-resize/jquery.resize.js"></script>
+  <script src="/js/vendor/angular-gridster/dist/angular-gridster.min.js"></script>
+  
+ 
+
+  <!-- satellizer -->
+  <script type="text/javascript" src="/js/vendor/satellizer/satellizer.min.js"></script>
+<!--   jwt -->
+  <script src="/js/vendor/angular-jwt/dist/angular-jwt.min.js"></script>
+  <!-- bluebird -->
   <script src="/js/vendor/bluebird/js/browser/bluebird.min.js"></script>
 
+  <!-- link to controllers, directives and services -->
   <script src="/js/app.js" charset="utf-8"></script>
+  <script src="/js/models/tool.js" charset="utf-8"></script>
   <script src="/js/services/transport.js" charset="utf-8"></script>
   <script src="/js/controllers/user.js" charset="utf-8"></script>
   <script src="/js/services/oauthKeys.js" charset="utf-8"></script>
@@ -28,6 +40,8 @@
   <script src="/js/directives/clock.js" charset="utf-8"></script>
   <script src="/js/directives/weather.js" charset="utf-8"></script>
   <script src="/js/services/weather.js" charset="utf-8"></script>
+
+  <!-- stylesheets -->
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
   <link rel="stylesheet" type="text/css" href="/css/app.css">
@@ -42,22 +56,37 @@
       <hr>
       <button class="facebook" ng-click="main.authenticate('facebook')"><i class="fa fa-facebook-square"></i> Sign in with Facebook</button>
       <button ng-click="main.authenticate('github')" class="github"><i class="fa fa-github-square"></i> Sign in with Github</button>
+
+
     </div>
 
     <div ng-show="main.isLoggedIn()">
       <img ng-src="{{ main.currentUser.picture }}">
       <p class="name">{{ main.currentUser.name }}</p>
       <button class="logout name" ng-click="main.logout()"><i class="fa fa-sign-out"></i> Logout</button>
+      <form ng-submit="main.addTool(tool)">
+        <input type="text" ng-model="tool.tools">
+      <button class="btn btn-default">add</button>
+          </form>
     </div>
   </header>
     <section>
-    <div class="container">
-      <div class="dg-weather col-md-3 tile" dg-data="user.temperature"></div>
-      <div class="dg-word col-md-6 tile" dg-data="user.word"></div>
-      <div class="dg-transport col-md-3 tile info" dg-data="user.status"></div>
-      <div class="dg-video col-md-8 tile info" dg-data="user.video"></div>
-      <div class="dg-clock col-md-4 tile info"></div>
+  <!--   <div class="container"> -->
+    <div data-gridster>
+        <ul>
+        <li data-gridster-item data-row="0" data-col="0" data-sizex="1" data-sizey="2"><div class="dg-weather tile info" dg-data="user.temperature"></div></li>
+        <li data-gridster-item data-row="1" data-col="2" data-sizex="2" data-sizey="2" ><div class="dg-word tile info" dg-data="user.word"></div></li>
+        <li data-gridster-item data-row="1" data-col="1" data-sizex="2" data-sizey="1" ><div class="dg-transport tile info" dg-data="user.status"></div></li>
+        <li data-gridster-item data-row="1" data-col="3" data-sizex="2" data-sizey="1" ><div class="dg-video tile info" dg-data="user.video"></div></li>
+        <li data-gridster-item data-row="2" data-col="0" data-sizex="1" data-sizey="1" ><div class="dg-clock info"></div></li>
+        <li data-gridster-item data-row="2" data-col="2" data-sizex="1" data-sizey="1" ><div class="info tile"><ul>
+          <li ng-repeat="note in user.notes track by $index">
+            <span class="message">{{ note.note }}</span>
+          </li>
+        </ul><form ng-submit="user.sendNote(main.currentUser._id)" class="form-inline"><div class="form-group"><input ng-model="user.note" class="form-control"></div><button class="btn btn-primary">add note</button></form></div></li>
+      </ul>
     </div>
+   <!--  </div> -->
     </section>
   </div>
 </body>
