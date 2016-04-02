@@ -6,7 +6,7 @@ function Word() {
     restrict: 'C',
     scope: { dgData:'=' },
     replace: true,
-    template: '<p>word: {{ dgData.word }} | {{ dgData.note }}</p>'
+    template: '<div class="container"><h1>{{ dgData.word }} </h1> <p>note: {{ dgData.note }}</p><p>defintion: {{ dgData.definitions[0].text }}</p></div>'
   }
 
 } 

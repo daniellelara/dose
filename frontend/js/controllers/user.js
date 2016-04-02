@@ -36,8 +36,17 @@ function UserController(weather, $window, $scope, Transport, Word, Video) {
   // line status call
   Transport.get().then(function(res){
   $scope.$applyAsync(function(){
-    self.status = res.data[1].lineStatuses[0].statusSeverityDescription
-    console.log(self.status);
+    self.status = {
+      bakerloo: res.data[0].lineStatuses[0].statusSeverityDescription,
+      central: res.data[1].lineStatuses[0].statusSeverityDescription,
+      district: res.data[3].lineStatuses[0].statusSeverityDescription,
+      hammersmith: res.data[4].lineStatuses[0].statusSeverityDescription,
+      jubilee: res.data[5].lineStatuses[0].statusSeverityDescription,
+      northern: res.data[7].lineStatuses[0].statusSeverityDescription,
+      picadilly: res.data[8].lineStatuses[0].statusSeverityDescription
+    }
+
+    
     });
   })  
 
@@ -45,6 +54,7 @@ function UserController(weather, $window, $scope, Transport, Word, Video) {
   Word.get().then(function(res){
     $scope.$applyAsync(function(){
       self.word = res.data;
+      console.log(res.data);
     });
   })
 
@@ -52,10 +62,12 @@ function UserController(weather, $window, $scope, Transport, Word, Video) {
   weather.get().then(function(res) {
     $scope.$applyAsync(function(){
       self.temperature = {
-        temp: res.temp.day,
-        description: res.weather[0].description,
-        icon: res.weather[0].icon
+        temp: res.list[0].temp.day,
+        description: res.list[0].weather[0].description,
+        icon: res.list[0].weather[0].icon,
+        name: res.city.name
       }
+      console.log(res);
     });
   });
 
