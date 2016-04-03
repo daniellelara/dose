@@ -8,6 +8,7 @@ var router = require('./config/routes');
 var config = require('./config/app');
 var server  = require('http').createServer(app);
 var io      = require('socket.io')(server);
+var Note = require('./models/note');
 
 express.static(__dirname + "/public");
 
@@ -24,13 +25,28 @@ app.use(cors({
 app.use('/', router);
 
 io.on('connect', function(socket){
+  Note.find(function(err, note_data) {
+    console.log(note_data);
+    socket.emit('notes', { notes: note_data });
+  })
+
   console.log("User connected with socket id of:" + socket.conn.id);
   socket.on('note', function(note){
-    console.log("notes", note);
-    io.emit('note', note);
-    
-  });
+    var newNote = new Note({
+         note: note.note,
+         user: note.user
+       });
+       //Save it to database
+       newNote.save(function(err, note){
+        console.log(note);
+          io.emit('note', note);
+       });
+   });
 });
+
+
+
+
 
 server.listen(config.port, function() {
   console.log("Express is listening on port " + config.port);

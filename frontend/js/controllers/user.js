@@ -79,9 +79,18 @@ function UserController(weather, $window, $scope, Transport, Word, Video) {
    $scope.$applyAsync(function(){
      self.notes.push(note);
      console.log(note);
+    
    })
    
- })
+ }) 
+
+ socket.on('notes', function(notes){
+   console.log("array", notes.notes);
+    
+    self.notes = notes.notes;
+    
+});
+   
 
  self.sendNote = function(user) {
    socket.emit('note', { note: self.note, user: user})

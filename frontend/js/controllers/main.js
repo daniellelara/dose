@@ -24,13 +24,14 @@ function MainController($auth, tokenService, $http, API) {
     tokenService.removeToken();
     this.currentUser = null;
   }
-
+  //add a tool to dashboard function
   this.addTool = function(tool) {
     $http.patch(API + '/' + self.currentUser._id, tool)
          .then(function(res) {
             console.log(tool);
           });
   }
+  //deleteTool to dashboard function
   this.deleteTool = function(tool) {
     $http.delete(API + '/' + self.currentUser._id, tool)
          .then(function(res) {

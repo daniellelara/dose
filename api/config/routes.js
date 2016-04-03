@@ -47,8 +47,10 @@ var upload = multer({
     }
   })
 });
-router.patch('/users/:id', usersController.updateOne);
-router.delete('/users/:id', usersController.deleteOne);
+router.route('/users/:id')
+  .patch(usersController.updateOne)
+  .delete(usersController.deleteOne)
+  .get(usersController.show);
 
 router.post('/register', authenticationController.register);
 router.post('/login', authenticationController.login);
