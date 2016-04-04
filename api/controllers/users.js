@@ -19,6 +19,7 @@ function usersUpdateOne(req, res) {
   });
 }
 function usersDeleteOne(req, res) {
+  console.log("req agian and again", req.body);
   User.findByIdAndUpdate(req.params.id, { $pull:{ tools: req.body.tools }}, { new: true }, function(err, user) {
     console.log(user);
     if(err) return res.status(500).json({message: err});

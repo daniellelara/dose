@@ -1,18 +1,16 @@
 angular.module('dose')
   .controller('UserController', UserController);
 
-UserController.$inject = ['weather', '$window', '$scope', 'Transport', 'Word', 'Video'];
+UserController.$inject = ['weather', '$window', '$scope', 'Transport', 'Word', 'Video', 'tokenService', 'GNews', 'GAll'];
 
-function UserController(weather, $window, $scope, Transport, Word, Video) {
+function UserController(weather, $window, $scope, Transport, Word, Video, tokenService, GNews, GAll) {
   var socket = $window.io("http://localhost:3000");
-  console.log(socket);
 
   socket.on('connect', function() {
     console.log("CONNECTED!");
   });
 
   var self = this;
-
   //for geolocation
   this.lat = 0;
   this.lon = 0;
@@ -24,10 +22,16 @@ function UserController(weather, $window, $scope, Transport, Word, Video) {
   this.word = null;
   //ted video
   this.video = null;
-
   //notes
   self.notes =[];
   self.note = null;
+  //get current user
+  this.user = tokenService.getUser();
+
+  //guardian sport
+  this.sport = {};
+  this.allNews = {};
+
 
   // youtube ted channel call
   Video.get().then(function(res){
@@ -39,18 +43,16 @@ function UserController(weather, $window, $scope, Transport, Word, Video) {
 
   // line status call
   Transport.get().then(function(res){
-  $scope.$applyAsync(function(){
-    self.status = {
-      bakerloo: res.data[0].lineStatuses[0].statusSeverityDescription,
-      central: res.data[1].lineStatuses[0].statusSeverityDescription,
-      district: res.data[3].lineStatuses[0].statusSeverityDescription,
-      hammersmith: res.data[4].lineStatuses[0].statusSeverityDescription,
-      jubilee: res.data[5].lineStatuses[0].statusSeverityDescription,
-      northern: res.data[7].lineStatuses[0].statusSeverityDescription,
-      picadilly: res.data[8].lineStatuses[0].statusSeverityDescription
-    }
-
-    
+    $scope.$applyAsync(function(){
+      self.status = {
+        bakerloo: res.data[0].lineStatuses[0].statusSeverityDescription,
+        central: res.data[1].lineStatuses[0].statusSeverityDescription,
+        district: res.data[3].lineStatuses[0].statusSeverityDescription,
+        hammersmith: res.data[4].lineStatuses[0].statusSeverityDescription,
+        jubilee: res.data[5].lineStatuses[0].statusSeverityDescription,
+        northern: res.data[7].lineStatuses[0].statusSeverityDescription,
+        picadilly: res.data[8].lineStatuses[0].statusSeverityDescription
+      }
     });
   })  
 
@@ -58,7 +60,6 @@ function UserController(weather, $window, $scope, Transport, Word, Video) {
   Word.get().then(function(res){
     $scope.$applyAsync(function(){
       self.word = res.data;
-      console.log(res.data);
     });
   })
 
@@ -71,30 +72,45 @@ function UserController(weather, $window, $scope, Transport, Word, Video) {
         icon: res.list[0].weather[0].icon,
         name: res.city.name
       }
-      console.log(res);
     });
   });
 
+  //guaridan test for sport
+  GNews.get(). then(function(res){
+    $scope.$applyAsync(function(){
+      self.sport = res.data.response.results;
+      console.log(self.sport)
+    });  
+  })
+
+  GAll.get().then(function(res){
+    $scope.$applyAsync(function(){
+      self.allNews = res.data.response.results;
+      console.log(self.allNews);
+    }); 
+  })
+
+//create new note and add it to array of notes
  socket.on('note', function(note){
-   $scope.$applyAsync(function(){
+  $scope.$applyAsync(function(){
      self.notes.push(note);
-     console.log(note);
-    
-   })
-   
+  })
  }) 
 
+//query all notes in database and make it equal to notes
  socket.on('notes', function(notes){
-   console.log("array", notes.notes);
-    
-    self.notes = notes.notes;
-    
-});
+   //filter only current user notes
+  var allNotes = notes.notes 
+  var userNotes = allNotes.filter(function(note){
+    return note.user == self.user._id
+  })
+  self.notes = userNotes;
+ });
    
 
  self.sendNote = function(user) {
    socket.emit('note', { note: self.note, user: user})
-  
    self.note = null;
  }
+
 }

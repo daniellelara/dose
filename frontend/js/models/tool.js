@@ -1,6 +1,6 @@
 angular
-.module('dose')
-.factory('Tool', Tool);
+  .module('dose')
+  .factory('Tool', Tool);
 
 Tool.$inject = ['$resource', 'API'];
 function Tool($resource, API) {

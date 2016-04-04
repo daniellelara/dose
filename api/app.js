@@ -32,6 +32,7 @@ io.on('connect', function(socket){
 
   console.log("User connected with socket id of:" + socket.conn.id);
   socket.on('note', function(note){
+    //create new note
     var newNote = new Note({
          note: note.note,
          user: note.user
@@ -42,7 +43,7 @@ io.on('connect', function(socket){
           io.emit('note', note);
        });
    });
-});
+  });
 
 
 

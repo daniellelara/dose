@@ -74,7 +74,8 @@ function facebook(req, res) {
               facebookId: profile.id,
               name: profile.name,
               picture: profile.picture.data.url,
-              email: profile.email
+              email: profile.email, 
+              tools: []
             });
           }
           // either way, we save the user record
@@ -83,7 +84,7 @@ function facebook(req, res) {
     })
     .then(function(user) {
       // step 4, we create a JWT and send it back to our angular app
-      var payload = { _id: user._id, name: user.name, picture: user.picture };
+      var payload = { _id: user._id, name: user.name, picture: user.picture, tools: user.tools };
       var token = jwt.sign(payload, config.secret, { expiresIn: '24h' });
       return res.send({ token: token, user: payload });
     })
@@ -132,7 +133,8 @@ function github(req, res) {
             name: profile.name,
             password: profile.id,
             picture: profile.avatar_url,
-            email: profile.email
+            email: profile.email,
+            tools: []
           })
         }
         console.log(user)
@@ -142,7 +144,7 @@ function github(req, res) {
   .then(function(user){
     console.log("user sent", user);
     //lets send a token to the front end
-    var payload = { _id: user._id, name: user.name, picture: user.picture };
+    var payload = { _id: user._id, name: user.name, picture: user.picture, tools: user.tools };
     var token = jwt.sign(payload, config.secret, { expiresIn: '24h' });
     return res.send({ token: token, user: payload });
 
