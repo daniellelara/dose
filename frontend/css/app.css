@@ -159,9 +159,9 @@ header {
 
 .center-add {
   position: absolute;
-  width: 200px;
-  background-color: white;
-  height: 200px;
+  width: 400px;
+  background-color: rgba(255, 255, 255, 0.5);
+  height: 400px;
   top:50%;
   left:50%;
   padding:15px;
@@ -169,7 +169,8 @@ header {
   -webkit-transform: translate(-50%,-50%);
   transform: translate(-50%,-50%);
   z-index: 1;
-  border: 3px solid grey;
+  border: 1px solid grey;
+  overflow-y: scroll;
 }
 
 #board {
@@ -251,4 +252,44 @@ header {
 }
 .gtitle {
   color: black;
+}
+
+.fa.fa-minus {
+  z-index: 10000;
+  position: relative;
+}
+.iconstore {
+  height: 50px;
+  cursor: pointer;
+}
+
+.iconstore:hover {
+  opacity: 0.6;
+}
+.iconpaper {
+  height: 50px;
+  cursor: pointer;
+  border-radius: 0;
+}
+
+.iconpaper:hover {
+  opacity: 0.6;
+}
+.add {
+  cursor: pointer;
+}
+
+.apps {
+  background-color: rgba(192, 204, 204, 0.8);
+  border-bottom: 1px solid grey;
+  border-top: 1px solid grey;
+  overflow-y: scroll;
+}
+
+.appstwo {
+  background-color: rgba(192, 204, 204, 0.8);
+  border-bottom: 1px solid grey;
+  border-top: 1px solid grey;
+  overflow-x: scroll;
+  height: 100px;
 }

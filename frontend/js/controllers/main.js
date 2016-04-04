@@ -36,10 +36,13 @@ function MainController($auth, tokenService, $http, API) {
 
   //add a tool to dashboard function
   this.addTool = function(tool) {
-    $http.patch(API + '/' + self.currentUser._id, tool)
+    $http.patch(API + '/' + self.currentUser._id, { tools: tool })
       .then(function(res) {
         var tools = self.currentUser.tools
-        tools.push(tool.tools);
+        tools.push(tool);
+        console.log($('#'+ tool))
+        $('#'+ tool).addClass('fadeOut');
+        console.log($('#'+ tool))
       });
   }
 
@@ -62,7 +65,7 @@ function MainController($auth, tokenService, $http, API) {
   }
 
   this.setOpacity = function(){
-    document.getElementById("board").style.opacity = 0.5; //pure JS
+    document.getElementById("board").style.opacity = 0.2; //pure JS
   }
   this.deleteOpacity = function(){
     document.getElementById("board").style.opacity = 1; //pure JS
@@ -72,16 +75,20 @@ function MainController($auth, tokenService, $http, API) {
     console.log(word);
     if (word == "sun") {
       document.body.style.backgroundImage = "url('/images/sun.jpg')";
+      document.body.style.backgroundSize = "cover";
 
     }
     else if (word == "forest") {
       document.body.style.backgroundImage = "url('/images/forest.jpg')";
+      document.body.style.backgroundSize = "cover";
     }
     else if (word == "forestTwo") {
       document.body.style.backgroundImage = "url('/images/forest2.jpg')";
+      document.body.style.backgroundSize = "cover";
     }
     else if (word == "night sky") {
       document.body.style.backgroundImage = "url('/images/nightsky.jpg')";
+      document.body.style.backgroundSize = "cover";
     }
   }
 

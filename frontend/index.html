@@ -46,6 +46,7 @@
   <script src="/js/services/weather.js" charset="utf-8"></script>
 
   <!-- stylesheets -->
+  <link rel="stylesheet" type="text/css" href="/css/animate.css">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
  <link href='https://fonts.googleapis.com/css?family=Oswald:400,300' rel='stylesheet' type='text/css'>
@@ -79,32 +80,29 @@
   <div ng-show="show" class="center-add">
   <button class="close" ng-click="main.deleteOpacity(); show = !show"><i class="fa fa-minus"></i></button>
   <div class="head">
-    <p>add a dose tool</p>
+    <p>add a tool</p>
   </div>
+  
+<div class="row apps">
+      <div class="col-md-4 animatedd" ng-click="main.addTool('Weather')" class="add"><img class="iconstore" id="Weather" src="./images/weather1.png"></div>
+      <div class="col-md-4 animated" id="Word" ng-click="main.addTool('Word')" class="add"><img class="iconstore" src="./images/word2.png"></div>
+      <div class="col-md-4 animated" id="Ted" ng-click="main.addTool('Ted')" class="add"><img class="iconstore" src="./images/ted2.png"></div>
+   
+      <div class="col-md-4 animated" id="Tfl" ng-click="main.addTool('Tfl')" class="add"><img class="iconstore" src="./images/tfl2.png"></div>
+      <div class="col-md-4 animated" id="Clock" ng-click="main.addTool('Clock')" class="add"><img class="iconstore" src="./images/clock3.png"></div>
+      <div class="col-md-4 animated" id="Note" ng-click="main.addTool('Note')"><img class="iconstore" src="./images/note3.png"></div>
+   
+      <div class="col-md-4 animated" id="Sport" ng-click="main.addTool('Sport')" class="add"><img class="iconstore" src="./images/guardian2.png"></div>
+      <div class="col-md-4 animated" id="Allnews" ng-click="main.addTool('Allnews')" class="add"><img class="iconstore" src="./images/weather2.png"></div>
+  </div> 
 
-    <form ng-submit="main.addTool(tool)">
-      <select ng-model="tool.tools">
-        <option>Weather</option>
-        <option>Word</option>
-        <option>Ted</option>
-        <option>Tfl</option>
-        <option>Clock</option>
-        <option>Note</option>
-        <option>Sport</option>
-        <option>Allnews</option>
-      </select>
-    <button class="btn btn-default"><i class="fa fa-plus"></i></button>
-        </form>
-        <p>Change background</p>
-        <form ng-submit="main.backgroundChange(word)">
-          <select ng-model="word">
-            <option>forest</option>
-            <option>forestTwo</option>
-            <option>sun</option>
-            <option>night sky</option>
-          </select>
-        <button class="btn btn-default"><i class="fa fa-plus"></i></button>
-            </form>
+  <p>pick a background</p>
+  <div class="row appstwo">
+    <div class="col-md-3 animated" ng-click="main.backgroundChange('forest')" class="add"><img class="iconpaper" src="./images/forest.jpg"></div>
+    <div class="col-md-3 animated" ng-click="main.backgroundChange('forestTwo')" class="add"><img class="iconpaper" src="./images/forest2.jpg"></div>
+    <div class="col-md-3 animated" ng-click="main.backgroundChange('sun')" class="add"><img class="iconpaper" src="./images/sun.jpg"></div>
+    <div class="col-md-3 animated" ng-click="main.backgroundChange('night sky')" class="add"><img class="iconpaper" src="./images/nightsky.jpg"></div>
+  </div>      
      <!-- change opacity back on close and hide div   --> 
     
   </div>
