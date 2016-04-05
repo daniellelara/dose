@@ -1,9 +1,9 @@
 angular.module('dose')
   .controller('UserController', UserController);
 
-UserController.$inject = ['weather', '$window', '$scope', 'Transport', 'Word', 'Video', 'tokenService', 'GNews', 'GAll', 'football'];
+UserController.$inject = ['weather', '$window', '$scope', 'Transport', 'Word', 'Video', 'tokenService', 'GNews', 'GAll', 'football', 'quote'];
 
-function UserController(weather, $window, $scope, Transport, Word, Video, tokenService, GNews, GAll, football) {
+function UserController(weather, $window, $scope, Transport, Word, Video, tokenService, GNews, GAll, football, quote) {
   var socket = $window.io("http://localhost:3000");
 
   socket.on('connect', function() {
@@ -35,69 +35,89 @@ function UserController(weather, $window, $scope, Transport, Word, Video, tokenS
 
 
   // youtube ted channel call
-  Video.get().then(function(res){
-    $scope.$applyAsync(function(){
-      self.video = res.data.items[0].id.videoId;
-      console.log(self.video);
-    });
-  })
+  this.ted = function() {
+    Video.get().then(function(res){
+      $scope.$applyAsync(function(){
+        self.video = res.data.items[0].id.videoId;
+        console.log(self.video);
+      });
+    })
+  }   
 
   // line status call
-  Transport.get().then(function(res){
-    $scope.$applyAsync(function(){
-      self.status = {
-        bakerloo: res.data[0].lineStatuses[0].statusSeverityDescription,
-        central: res.data[1].lineStatuses[0].statusSeverityDescription,
-        district: res.data[3].lineStatuses[0].statusSeverityDescription,
-        hammersmith: res.data[4].lineStatuses[0].statusSeverityDescription,
-        jubilee: res.data[5].lineStatuses[0].statusSeverityDescription,
-        northern: res.data[7].lineStatuses[0].statusSeverityDescription,
-        picadilly: res.data[8].lineStatuses[0].statusSeverityDescription
-      }
-    });
-  })  
+  this.tfl = function() {
+    Transport.get().then(function(res){
+      $scope.$applyAsync(function(){
+        self.status = {
+          bakerloo: res.data[0].lineStatuses[0].statusSeverityDescription,
+          central: res.data[1].lineStatuses[0].statusSeverityDescription,
+          district: res.data[3].lineStatuses[0].statusSeverityDescription,
+          hammersmith: res.data[4].lineStatuses[0].statusSeverityDescription,
+          jubilee: res.data[5].lineStatuses[0].statusSeverityDescription,
+          northern: res.data[7].lineStatuses[0].statusSeverityDescription,
+          picadilly: res.data[8].lineStatuses[0].statusSeverityDescription
+        }
+      });
+    })
+  }    
 
  //word of the day
-  Word.get().then(function(res){
-    $scope.$applyAsync(function(){
-      self.word = res.data;
-    });
-  })
+  this.wod = function() {
+    Word.get().then(function(res){
+      $scope.$applyAsync(function(){
+        self.word = res.data;
+      });
+    })
+  }  
 
   //weather call 
-  weather.get().then(function(res) {
-    $scope.$applyAsync(function(){
-      self.temperature = {
-        temp: res.list[0].temp.day,
-        description: res.list[0].weather[0].description,
-        icon: res.list[0].weather[0].icon,
-        name: res.city.name
-      }
+  this.displayWeather = function() {
+    weather.get().then(function(res) {
+      $scope.$applyAsync(function(){
+        self.temperature = {
+          temp: res.list[0].temp.day,
+          description: res.list[0].weather[0].description,
+          icon: res.list[0].weather[0].icon,
+          name: res.city.name
+        }
+      });
     });
-  });
+  }   
 
   //guaridan test for sport
-  GNews.get(). then(function(res){
-    $scope.$applyAsync(function(){
-      self.sport = res.data.response.results;
-      console.log(self.sport)
-    });  
-  })
+  this.guardianSport = function() {
+    GNews.get(). then(function(res){
+      $scope.$applyAsync(function(){
+        self.sport = res.data.response.results;
+        console.log("loaded", self.sport)
+      });  
+    })
+  }
+  //bpl table
+  this.table = function() {
+    football.get().then(function(res){
+      $scope.$applyAsync(function(){
+        self.tables = res.data.standing;
+        console.log(res.data.standing);
+      });  
+    });
+  }
 
-  football.get().then(function(res){
-        $scope.$applyAsync(function(){
-          self.tables = res.data.standing;
-          console.log(res.data.standing);
-        });  
+  quote.get().then(function(res){
+    
+          console.log(res);
+      
     
   });
 
-  GAll.get().then(function(res){
-    $scope.$applyAsync(function(){
-      self.allNews = res.data.response.results;
-      console.log(self.allNews);
-    }); 
-  })
+  this.guardianUk = function() {
+    GAll.get().then(function(res){
+      $scope.$applyAsync(function(){
+        self.allNews = res.data.response.results;
+        console.log(self.allNews);
+      }); 
+    })
+  }  
 
 //create new note and add it to array of notes
  socket.on('note', function(note){

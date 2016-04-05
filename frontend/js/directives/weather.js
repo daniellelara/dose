@@ -6,7 +6,7 @@ function Weather() {
     restrict: 'C',
     scope: { dgData:'=' },
     replace: true,
-    template: '<div class="container"><img class="icon" src="http://openweathermap.org/img/w/{{ dgData.icon }}.png"><h3>{{ dgData.temp }}.C</h3><p>{{ dgData.description }}</p><p>{{ dgData.name }}</p></div>'
+    template: '<div><img class="icon" src="http://openweathermap.org/img/w/{{ dgData.icon }}.png"><div class="weather"><h3>{{ dgData.temp }}.C</h3><p>{{ dgData.description }}</p><p>{{ dgData.name }}</p></div></div>'
   }
 
 } 

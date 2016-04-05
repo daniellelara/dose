@@ -32,6 +32,7 @@
   <script src="/js/services/football.js" charset="utf-8"></script>
   <script src="/js/services/token.js" charset="utf-8"></script>
   <script src="/js/services/word.js" charset="utf-8"></script>
+  <script src="/js/services/quote.js" charset="utf-8"></script>
   <script src="/js/services/guardian.js" charset="utf-8"></script>
   <script src="/js/services/guardianAll.js" charset="utf-8"></script>
   <script src="/js/services/video.js" charset="utf-8"></script>
@@ -57,101 +58,84 @@
 </head>
 <body ng-controller="UserController as user">
   <div ng-controller="MainController as main">
-  <header>
-    
+    <header>
+      <div ng-show="main.isLoggedIn()">
+        <img ng-src="{{ main.currentUser.picture }}">
+        <p class="name">{{ main.currentUser.name }} | dose</p>
+        <button class="logout name" ng-click="main.logout()"><i class="fa fa-sign-out"></i> Logout</button>
+        <button class="add circle" ng-click="show = !show; main.setOpacity()"><i class="fa fa-plus"></i></button>
+      </div>
+    </header>
 
-    <div ng-show="main.isLoggedIn()">
-      <img ng-src="{{ main.currentUser.picture }}">
-      <p class="name">{{ main.currentUser.name }} | dose</p>
-
-      <button class="logout name" ng-click="main.logout()"><i class="fa fa-sign-out"></i> Logout</button>
-      <button class="delete circle" ng-click="delete = !delete; main.setOpacity()"><i class="fa fa-minus"></i></button>
-      <button class="add circle" ng-click="show = !show; main.setOpacity()"><i class="fa fa-plus"></i></button>
-       
+    <div ng-hide="main.isLoggedIn()" class="center-login">
+      <h1 class="title">DOSE</h1>
+      <button class="facebook" ng-click="main.authenticate('facebook')"><i class="fa fa-facebook-square"></i> Sign in with Facebook</button><p>or</p>
+      <button ng-click="main.authenticate('github')" class="github"><i class="fa fa-github-square"></i> Sign in with Github</button>
     </div>
-  </header>
+    <div ng-show="show" class="center-add">
+      <button class="close" ng-click="main.deleteOpacity(); show = !show"><i class="fa fa-minus"></i></button>
+      <div class="head">
+        <p>add a tool</p>
+      </div>
+      <div class="row apps">
+        <div class="col-md-4 animated" ng-click="main.addTool('Weather'); user.displayWeather()" class="add"><img class="iconstore" id="Weather" src="./images/weather1.png"></div>
+        
+        <div class="col-md-4 animated" id="Word" ng-click="main.addTool('Word'); user.wod()" class="add"><img class="iconstore" src="./images/word2.png"></div>
 
-  <div ng-hide="main.isLoggedIn()" class="center-login">
-    <h1 class="title">DOSE</h1>
-   
-    <button class="facebook" ng-click="main.authenticate('facebook')"><i class="fa fa-facebook-square"></i> Sign in with Facebook</button><p>or</p>
-    <button ng-click="main.authenticate('github')" class="github"><i class="fa fa-github-square"></i> Sign in with Github</button>
+        <div class="col-md-4 animated" id="Ted" ng-click="main.addTool('Ted'); user.ted()" class="add"><img class="iconstore" src="./images/ted2.png"></div>
+        
+        <div class="col-md-4 animated" id="bpl" ng-click="main.addTool('bpl'); user.table()" class="add"><img class="iconstore" src="./images/bpl.png"></div>
+     
+        <div class="col-md-4 animated" id="Tfl" ng-click="main.addTool('Tfl'); user.tfl()" class="add"><img class="iconstore" src="./images/tfl2.png"></div>
 
+        <div class="col-md-4 animated" id="Clock" ng-click="main.addTool('Clock')" class="add"><img class="iconstore" src="./images/clock3.png"></div>
 
-  </div>
-  <div ng-show="show" class="center-add">
-  <button class="close" ng-click="main.deleteOpacity(); show = !show"><i class="fa fa-minus"></i></button>
-  <div class="head">
-    <p>add a tool</p>
-  </div>
-  
-<div class="row apps">
-      <div class="col-md-4 animatedd" ng-click="main.addTool('Weather')" class="add"><img class="iconstore" id="Weather" src="./images/weather1.png"></div>
-      <div class="col-md-4 animated" id="Word" ng-click="main.addTool('Word')" class="add"><img class="iconstore" src="./images/word2.png"></div>
+        <div class="col-md-4 animated" id="Note" ng-click="main.addTool('Note')"><img class="iconstore" src="./images/note3.png"></div>
+     
+        <div class="col-md-4 animated" id="Sport" ng-click="main.addTool('Sport'); user.guardianSport();" class="add"><img class="iconstore" src="./images/guardian2.png"></div>
 
-      <div class="col-md-4 animated" id="Ted" ng-click="main.addTool('Ted')" class="add"><img class="iconstore" src="./images/ted2.png"></div>
-      
-      <div class="col-md-4 animated" id="bpl" ng-click="main.addTool('bpl')" class="add"><img class="iconstore" src="./images/bpl.png"></div>
-   
-      <div class="col-md-4 animated" id="Tfl" ng-click="main.addTool('Tfl')" class="add"><img class="iconstore" src="./images/tfl2.png"></div>
-      <div class="col-md-4 animated" id="Clock" ng-click="main.addTool('Clock')" class="add"><img class="iconstore" src="./images/clock3.png"></div>
-      <div class="col-md-4 animated" id="Note" ng-click="main.addTool('Note')"><img class="iconstore" src="./images/note3.png"></div>
-   
-      <div class="col-md-4 animated" id="Sport" ng-click="main.addTool('Sport')" class="add"><img class="iconstore" src="./images/guardian2.png"></div>
-      <div class="col-md-4 animated" id="Allnews" ng-click="main.addTool('Allnews')" class="add"><img class="iconstore" src="./images/weather2.png"></div>
-  </div> 
+        <div class="col-md-4 animated" id="Allnews" ng-click="main.addTool('Allnews'); user.guardianUk()" class="add"><img class="iconstore" src="./images/weather2.png"></div>
+      </div> 
 
-  <p>pick a background</p>
-  <div class="row appstwo">
-    <div class="col-md-3 animated" ng-click="main.backgroundChange('forest')" class="add"><img class="iconpaper" src="./images/forest.jpg"></div>
-    <div class="col-md-3 animated" ng-click="main.backgroundChange('forestTwo')" class="add"><img class="iconpaper" src="./images/forest2.jpg"></div>
-    <div class="col-md-3 animated" ng-click="main.backgroundChange('sun')" class="add"><img class="iconpaper" src="./images/sun.jpg"></div>
-    <div class="col-md-3 animated" ng-click="main.backgroundChange('night sky')" class="add"><img class="iconpaper" src="./images/nightsky.jpg"></div>
-  </div>      
+      <p>pick a background</p>
+      <div class="row appstwo">
+        <div class="picture" ng-click="main.backgroundChange('forest')" class="add"><img class="iconpaper" src="./images/forest.jpg"></div>
+        <div class="picture" ng-click="main.backgroundChange('forestTwo')" class="add"><img class="iconpaper" src="./images/forest2.jpg"></div>
+        <div class="picture" ng-click="main.backgroundChange('sun')" class="add"><img class="iconpaper" src="./images/sun.jpg"></div>
+        <div class="picture" ng-click="main.backgroundChange('night sky')" class="add"><img class="iconpaper" src="./images/nightsky.jpg"></div>
+      </div>      
      <!-- change opacity back on close and hide div   --> 
     
-  </div>
-   <div ng-show="delete" class="center-add">
-   <button class="close" ng-click="main.deleteOpacity(); delete = !delete"><i class="fa fa-minus"></i></button>
-   <div class="head">
-     <p>delete a dose tool</p>
-   </div> 
-    <form class="new" ng-submit="main.deleteTool(tools.tool)">
-      <select ng-model="tools.tool">
-        <option ng-repeat="tool in main.tools track by $index">{{ tool }}</option>
-      </select>
-      <button class="btn btn-default">delete</button>
-    </form>
-    
-  </div>
+    </div>
+
     <section id="board" ng-show="main.isLoggedIn()">
   <!--   <div class="container"> -->
-    <div data-gridster>
+      <div data-gridster>
         <ul>
-        <li ng-if="main.hasTool('Weather')" data-gridster-item data-row="0" data-col="0" data-sizex="1" data-sizey="2"><div class="dg-weather tile info" dg-data="user.temperature"></div>
-        </li>
-        <li ng-if="main.hasTool('Word')" data-gridster-item data-row="1" data-col="2" data-sizex="2" data-sizey="2" ><div class="dg-word tile info" dg-data="user.word"></div></li>
-        <li ng-if="main.hasTool('Tfl')" data-gridster-item data-row="1" data-col="1" data-sizex="2" data-sizey="1" ><div class="dg-transport tile info" dg-data="user.status"></div><i class="fa fa-minus" ng-click="main.deleteTool('Tfl')"></i></li>
-
-        <li ng-if="main.hasTool('Ted')" data-gridster-item data-row="1" data-col="3" data-sizex="2" data-sizey="1" ><div class="headline-video">TED <i class="fa fa-minus" ng-click="main.deleteTool('Ted')"></i></div><div class="dg-video tile info" dg-data="user.video"></div></li>
-
-        <li ng-if="main.hasTool('Clock')" data-gridster-item data-row="2" data-col="0" data-sizex="1" data-sizey="1" ><div class="dg-clock info"></div></li>
-        
-        <li ng-if="main.hasTool('Sport')" data-gridster-item data-row="2" data-col="4" data-sizex="1" data-sizey="1" ><div class="cont-news"><div class="headline-sport">guardian | sport <i class="fa fa-minus" ng-click="main.deleteTool('Sport')"></i></div><div class="container info"><div class="dg-GSport info tile" dg-data="user.sport"></div></div></div></li> 
-
-        <li ng-if="main.hasTool('Allnews')" data-gridster-item data-row="3" data-col="0" data-sizex="1" data-sizey="1" ><div class="cont-news"><div class="headline-all">guardian | uk <i class="fa fa-minus" ng-click="main.deleteTool('Allnews')"></i></div><div class="container info"><div class="dg-GAll info tile" dg-data="user.allNews"></div></div></div></li>
-
-        <li  ng-if="main.hasTool('bpl')" data-gridster-item data-row="3" data-col="4" data-sizex="1" data-sizey="1" ><div class="headline-all">BPL<i ng-click="main.deleteTool('bpl')" class="fa fa-minus"></i></div><div class="league"><div class="dg-PLeague info tile" dg-data="user.tables"></div></div></li>
-
-        <li ng-if="main.hasTool('Note')" data-gridster-item data-row="2" data-col="2" data-sizex="2" data-sizey="1" ><div class="info tile-note"><div class="headline-news">notes<i class="fa fa-minus" ng-click="main.deleteTool('Note')"></i></div><ul class="cont-note">
-          <li class="notes" ng-repeat="note in user.notes track by $index">
-            <p class="notes-text">{{ note.note }}</p>
+          <li ng-if="main.hasTool('Weather')" data-gridster-item data-row="0" data-col="0" data-sizex="1" data-sizey="2"><div class="tile"><div class="headline-bpl"><i ng-click="user.displayWeather()" class="fa fa-refresh"></i>weather<i class="fa fa-minus" ng-click="main.deleteTool('Weather')"></i></div><div class="dg-weather info" dg-data="user.temperature"></div></div>
           </li>
-        </ul><form ng-submit="user.sendNote(main.currentUser._id)" class="form-inline"><div class="form-group"><input ng-model="user.note" class="note"></div><button class="btn btn-secondary-outline add-note">add note</button></form></div></li>
-      </ul>
-    </div>
-   <!--  </div> -->
-    </section>
+          <li ng-if="main.hasTool('Word')" data-gridster-item data-row="1" data-col="2" data-sizex="1" data-sizey="1" ><div class="tile"><div class="headline-bpl"><i class="fa fa-minus" ng-click="main.deleteTool('Word')"></i></div><div class="dg-word" dg-data="user.word"></div></div></li>
+
+          <li ng-if="main.hasTool('Tfl')" data-gridster-item data-row="1" data-col="1" data-sizex="1" data-sizey="1" ><div class="headline"><i ng-click="user.tfl()" class="fa fa-refresh"></i>status updates<i class="fa fa-minus" ng-click="main.deleteTool('Tfl')"></i></div><div class="dg-transport" dg-data="user.status"></div></li>
+
+          <li ng-if="main.hasTool('Ted')" data-gridster-item data-row="1" data-col="3" data-sizex="2" data-sizey="1" ><div class="tile info"><div class="headline-video">TED <i class="fa fa-minus" ng-click="main.deleteTool('Ted')"></i></div><div class="dg-video" dg-data="user.video"></div></div></li>
+
+          <li ng-if="main.hasTool('Clock')" data-gridster-item data-row="2" data-col="0" data-sizex="1" data-sizey="1" ><div class="dg-clock info"></div></li>
+          
+          <li ng-if="main.hasTool('Sport')" data-gridster-item data-row="2" data-col="4" data-sizex="1" data-sizey="1" ><div class="headline-sport"><i ng-click="user.guardianSport()" class="fa fa-refresh"></i>guardian | sport <i class="fa fa-minus" ng-click="main.deleteTool('Sport')"></i></div><div class="cont-news"><div class="container info"><div class="dg-GSport info tile" dg-data="user.sport"></div></div></div></li> 
+
+          <li ng-if="main.hasTool('Allnews')" data-gridster-item data-row="3" data-col="0" data-sizex="1" data-sizey="1" ><div class="headline-all"><i ng-click="user.guardianUk()" class="fa fa-refresh"></i>guardian | uk <i class="fa fa-minus" ng-click="main.deleteTool('Allnews')"></i></div><div class="cont-news"><div class="container info"><div class="dg-GAll info tile" dg-data="user.allNews"></div></div></div></li>
+
+          <li  ng-if="main.hasTool('bpl')" data-gridster-item data-row="3" data-col="4" data-sizex="3" data-sizey="2" ><div class="tile info"><div class="headline-bpl"><i ng-click="user.table()" class="fa fa-refresh"></i>BPL<i ng-click="main.deleteTool('bpl')" class="fa fa-minus"></i></div><div class="league"><div class="dg-PLeague" dg-data="user.tables"></div></div></div></li>
+
+          <li ng-if="main.hasTool('Note')" data-gridster-item data-row="2" data-col="2" data-sizex="2" data-sizey="1" ><div class="info tile-note"><div class="headline-news">notes<i class="fa fa-minus" ng-click="main.deleteTool('Note')"></i></div><ul class="cont-note">
+            <li class="notes" ng-repeat="note in user.notes track by $index">
+              <p class="notes-text">{{ note.note }}</p>
+            </li>
+          </ul><form ng-submit="user.sendNote(main.currentUser._id)" class="form-inline"><div class="form-group"><input ng-model="user.note" class="note"></div><button class="btn btn-secondary-outline add-note">add note</button></form></div></li>
+        </ul>
+      </div>
+   </section>
   </div>
 </body>
 </html>

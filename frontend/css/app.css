@@ -129,6 +129,13 @@ header {
 .icon {
   height: 100px;
   text-align: center;
+  margin: 0;
+  float: left;
+}
+
+.weather {
+  margin: 20px;
+  text-align: center;
 }
 
 .notes {
@@ -246,7 +253,12 @@ header {
 }
 
 .headline-all {
-  background-color: yellow;
+  background-color: #E8A05C;
+  color: white;
+  text-align: center;
+}
+.headline-bpl {
+  background-color: #B2A7B9;
   color: white;
   text-align: center;
 }
@@ -257,7 +269,30 @@ header {
 .fa.fa-minus {
   z-index: 10000;
   position: relative;
+  float: right;
+  margin-right: 10px;
+  margin-top: 2px;
+  cursor: pointer;
+
 }
+.fa.fa-refresh {
+  z-index: 10000;
+  position: relative;
+  float: left;
+  margin-left: 10px;
+  margin-top: 2px;
+  cursor: pointer;
+
+
+}
+
+.fa.fa-refresh:active {
+  transform: rotate(80deg);
+  -webkit-transform: rotate(80deg);
+  -ms-transform: rotate(80deg);
+  
+
+}  
 .iconstore {
   height: 50px;
   cursor: pointer;
@@ -308,7 +343,7 @@ tr {
 }
 
 .league {
-  height: 400px;
+  height: 200px;
   overflow-y: scroll;
   font-size: 11px;
 }
