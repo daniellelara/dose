@@ -60,8 +60,12 @@ function MainController($auth, tokenService, $http, API) {
 
   //function match user tool to tool
   this.hasTool = function(word) {
-    var tools = self.currentUser.tools;
-    return (tools.indexOf(word) > -1);
+    if(self.currentUser) {
+      var tools = self.currentUser.tools;
+      return (tools.indexOf(word) > -1);
+    } else {
+      return false;
+    }
   }
 
   this.setOpacity = function(){

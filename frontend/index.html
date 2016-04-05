@@ -29,6 +29,7 @@
   <script src="/js/services/transport.js" charset="utf-8"></script>
   <script src="/js/controllers/user.js" charset="utf-8"></script>
   <script src="/js/services/oauthKeys.js" charset="utf-8"></script>
+  <script src="/js/services/football.js" charset="utf-8"></script>
   <script src="/js/services/token.js" charset="utf-8"></script>
   <script src="/js/services/word.js" charset="utf-8"></script>
   <script src="/js/services/guardian.js" charset="utf-8"></script>
@@ -37,6 +38,7 @@
   <script src="/js/services/location.js" charset="utf-8"></script>
   <script src="/js/controllers/main.js" charset="utf-8"></script>
   <script src="/js/directives/guardiansport.js" charset="utf-8"></script>
+  <script src="/js/directives/league.js" charset="utf-8"></script>
   <script src="/js/directives/guardianall.js" charset="utf-8"></script>
   <script src="/js/directives/video.js" charset="utf-8"></script>
   <script src="/js/directives/transport.js" charset="utf-8"></script>
@@ -86,7 +88,10 @@
 <div class="row apps">
       <div class="col-md-4 animatedd" ng-click="main.addTool('Weather')" class="add"><img class="iconstore" id="Weather" src="./images/weather1.png"></div>
       <div class="col-md-4 animated" id="Word" ng-click="main.addTool('Word')" class="add"><img class="iconstore" src="./images/word2.png"></div>
+
       <div class="col-md-4 animated" id="Ted" ng-click="main.addTool('Ted')" class="add"><img class="iconstore" src="./images/ted2.png"></div>
+      
+      <div class="col-md-4 animated" id="bpl" ng-click="main.addTool('bpl')" class="add"><img class="iconstore" src="./images/bpl.png"></div>
    
       <div class="col-md-4 animated" id="Tfl" ng-click="main.addTool('Tfl')" class="add"><img class="iconstore" src="./images/tfl2.png"></div>
       <div class="col-md-4 animated" id="Clock" ng-click="main.addTool('Clock')" class="add"><img class="iconstore" src="./images/clock3.png"></div>
@@ -123,20 +128,22 @@
   <!--   <div class="container"> -->
     <div data-gridster>
         <ul>
-        <li ng-show="!!main.hasTool('Weather')" data-gridster-item data-row="0" data-col="0" data-sizex="1" data-sizey="2"><div class="dg-weather tile info" dg-data="user.temperature"></div>
+        <li ng-if="main.hasTool('Weather')" data-gridster-item data-row="0" data-col="0" data-sizex="1" data-sizey="2"><div class="dg-weather tile info" dg-data="user.temperature"></div>
         </li>
-        <li ng-show="!!main.hasTool('Word')" data-gridster-item data-row="1" data-col="2" data-sizex="2" data-sizey="2" ><div class="dg-word tile info" dg-data="user.word"></div></li>
-        <li ng-show="!!main.hasTool('Tfl')" data-gridster-item data-row="1" data-col="1" data-sizex="2" data-sizey="1" ><div class="dg-transport tile info" dg-data="user.status"></div><i class="fa fa-minus" ng-click="main.deleteTool('Tfl')"></i></li>
+        <li ng-if="main.hasTool('Word')" data-gridster-item data-row="1" data-col="2" data-sizex="2" data-sizey="2" ><div class="dg-word tile info" dg-data="user.word"></div></li>
+        <li ng-if="main.hasTool('Tfl')" data-gridster-item data-row="1" data-col="1" data-sizex="2" data-sizey="1" ><div class="dg-transport tile info" dg-data="user.status"></div><i class="fa fa-minus" ng-click="main.deleteTool('Tfl')"></i></li>
 
-        <li ng-show="!!main.hasTool('Ted')" data-gridster-item data-row="1" data-col="3" data-sizex="2" data-sizey="1" ><div class="headline-video">TED <i class="fa fa-minus" ng-click="main.deleteTool('Ted')"></i></div><div class="dg-video tile info" dg-data="user.video"></div></li>
+        <li ng-if="main.hasTool('Ted')" data-gridster-item data-row="1" data-col="3" data-sizex="2" data-sizey="1" ><div class="headline-video">TED <i class="fa fa-minus" ng-click="main.deleteTool('Ted')"></i></div><div class="dg-video tile info" dg-data="user.video"></div></li>
 
-        <li ng-show="!!main.hasTool('Clock')" data-gridster-item data-row="2" data-col="0" data-sizex="1" data-sizey="1" ><div class="dg-clock info"></div></li>
+        <li ng-if="main.hasTool('Clock')" data-gridster-item data-row="2" data-col="0" data-sizex="1" data-sizey="1" ><div class="dg-clock info"></div></li>
         
-        <li ng-show="!!main.hasTool('Sport')" data-gridster-item data-row="2" data-col="4" data-sizex="1" data-sizey="1" ><div class="cont-news"><div class="headline-sport">guardian | sport <i class="fa fa-minus" ng-click="main.deleteTool('Sport')"></i></div><div class="container info"><div class="dg-GSport info tile" dg-data="user.sport"></div></div></div></li> 
+        <li ng-if="main.hasTool('Sport')" data-gridster-item data-row="2" data-col="4" data-sizex="1" data-sizey="1" ><div class="cont-news"><div class="headline-sport">guardian | sport <i class="fa fa-minus" ng-click="main.deleteTool('Sport')"></i></div><div class="container info"><div class="dg-GSport info tile" dg-data="user.sport"></div></div></div></li> 
 
-        <li ng-show="!!main.hasTool('Allnews')" data-gridster-item data-row="3" data-col="0" data-sizex="1" data-sizey="1" ><div class="cont-news"><div class="headline-all">guardian | uk <i class="fa fa-minus" ng-click="main.deleteTool('Allnews')"></i></div><div class="container info"><div class="dg-GAll info tile" dg-data="user.allNews"></div></div></div></li>
+        <li ng-if="main.hasTool('Allnews')" data-gridster-item data-row="3" data-col="0" data-sizex="1" data-sizey="1" ><div class="cont-news"><div class="headline-all">guardian | uk <i class="fa fa-minus" ng-click="main.deleteTool('Allnews')"></i></div><div class="container info"><div class="dg-GAll info tile" dg-data="user.allNews"></div></div></div></li>
 
-        <li ng-show="!!main.hasTool('Note')" data-gridster-item data-row="2" data-col="2" data-sizex="2" data-sizey="1" ><div class="info tile-note"><div class="headline-news">notes<i class="fa fa-minus" ng-click="main.deleteTool('Note')"></i></div><ul class="cont-note">
+        <li  ng-if="main.hasTool('bpl')" data-gridster-item data-row="3" data-col="4" data-sizex="1" data-sizey="1" ><div class="headline-all">BPL<i ng-click="main.deleteTool('bpl')" class="fa fa-minus"></i></div><div class="league"><div class="dg-PLeague info tile" dg-data="user.tables"></div></div></li>
+
+        <li ng-if="main.hasTool('Note')" data-gridster-item data-row="2" data-col="2" data-sizex="2" data-sizey="1" ><div class="info tile-note"><div class="headline-news">notes<i class="fa fa-minus" ng-click="main.deleteTool('Note')"></i></div><ul class="cont-note">
           <li class="notes" ng-repeat="note in user.notes track by $index">
             <p class="notes-text">{{ note.note }}</p>
           </li>

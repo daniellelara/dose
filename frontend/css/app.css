@@ -293,3 +293,22 @@ header {
   overflow-x: scroll;
   height: 100px;
 }
+
+.crest {
+  height: 20px;
+  float: left;
+}
+
+td,th {
+  padding: 0px 10px;
+}
+
+tr {
+  border-bottom: 1px solid white;
+}
+
+.league {
+  height: 400px;
+  overflow-y: scroll;
+  font-size: 11px;
+}

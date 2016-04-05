@@ -1,9 +1,9 @@
 angular.module('dose')
   .controller('UserController', UserController);
 
-UserController.$inject = ['weather', '$window', '$scope', 'Transport', 'Word', 'Video', 'tokenService', 'GNews', 'GAll'];
+UserController.$inject = ['weather', '$window', '$scope', 'Transport', 'Word', 'Video', 'tokenService', 'GNews', 'GAll', 'football'];
 
-function UserController(weather, $window, $scope, Transport, Word, Video, tokenService, GNews, GAll) {
+function UserController(weather, $window, $scope, Transport, Word, Video, tokenService, GNews, GAll, football) {
   var socket = $window.io("http://localhost:3000");
 
   socket.on('connect', function() {
@@ -31,6 +31,7 @@ function UserController(weather, $window, $scope, Transport, Word, Video, tokenS
   //guardian sport
   this.sport = {};
   this.allNews = {};
+  this.tables = null;
 
 
   // youtube ted channel call
@@ -82,6 +83,14 @@ function UserController(weather, $window, $scope, Transport, Word, Video, tokenS
       console.log(self.sport)
     });  
   })
+
+  football.get().then(function(res){
+        $scope.$applyAsync(function(){
+          self.tables = res.data.standing;
+          console.log(res.data.standing);
+        });  
+    
+  });
 
   GAll.get().then(function(res){
     $scope.$applyAsync(function(){
