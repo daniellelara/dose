@@ -43,7 +43,17 @@ io.on('connect', function(socket){
           io.emit('note', note);
        });
    });
+    socket.on('delete note', function(noteId){
+      console.log("clicked", noteId);
+      Note.findByIdAndRemove(noteId, function(err, note){
+        if(err) console.log(err);
+        return "hi";
+      });
+    })
+
   });
+
+
 
 
 

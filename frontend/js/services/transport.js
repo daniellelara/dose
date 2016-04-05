@@ -1,5 +1,5 @@
 angular.module('dose')
-  .service('Transport', Transport);
+  .service('TransportService', Transport);
 
 Transport.$inject = ['Geolocation', '$http']; 
 function Transport(Geolocation, $http) {

@@ -1,9 +1,9 @@
 angular.module('dose')
   .controller('UserController', UserController);
 
-UserController.$inject = ['weather', '$window', '$scope', 'Transport', 'Word', 'Video', 'tokenService', 'GNews', 'GAll', 'football', 'quote'];
+UserController.$inject = ['weather', '$window', '$scope', 'TransportService', 'Word', 'Video', 'tokenService', 'GNews', 'GAll', 'football', 'quote', 'Scores'];
 
-function UserController(weather, $window, $scope, Transport, Word, Video, tokenService, GNews, GAll, football, quote) {
+function UserController(weather, $window, $scope, TransportService, Word, Video, tokenService, GNews, GAll, football, quote, Scores) {
   var socket = $window.io("http://localhost:3000");
 
   socket.on('connect', function() {
@@ -32,6 +32,7 @@ function UserController(weather, $window, $scope, Transport, Word, Video, tokenS
   this.sport = {};
   this.allNews = {};
   this.tables = null;
+  this.scores = null;
 
 
   // youtube ted channel call
@@ -46,8 +47,9 @@ function UserController(weather, $window, $scope, Transport, Word, Video, tokenS
 
   // line status call
   this.tfl = function() {
-    Transport.get().then(function(res){
+    TransportService.get().then(function(res){
       $scope.$applyAsync(function(){
+
         self.status = {
           bakerloo: res.data[0].lineStatuses[0].statusSeverityDescription,
           central: res.data[1].lineStatuses[0].statusSeverityDescription,
@@ -110,6 +112,10 @@ function UserController(weather, $window, $scope, Transport, Word, Video, tokenS
     
   });
 
+  Scores.get().then(function(res){
+   self.scores = res.data;
+  })
+
   this.guardianUk = function() {
     GAll.get().then(function(res){
       $scope.$applyAsync(function(){
@@ -140,6 +146,14 @@ function UserController(weather, $window, $scope, Transport, Word, Video, tokenS
  self.sendNote = function(user) {
    socket.emit('note', { note: self.note, user: user})
    self.note = null;
+ }
+
+ self.deleteNote = function(note) {
+  console.log("notes id", note._id);
+  socket.emit('delete note', note._id)
+ 
+  var index = self.notes.indexOf(note);
+  self.notes.splice(index, 1);
  }
 
 }

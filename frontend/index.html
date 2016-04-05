@@ -29,6 +29,8 @@
   <script src="/js/services/transport.js" charset="utf-8"></script>
   <script src="/js/controllers/user.js" charset="utf-8"></script>
   <script src="/js/services/oauthKeys.js" charset="utf-8"></script>
+  <script src="/js/services/scores.js" charset="utf-8"></script>
+  <script src="/js/directives/scores.js" charset="utf-8"></script>
   <script src="/js/services/football.js" charset="utf-8"></script>
   <script src="/js/services/token.js" charset="utf-8"></script>
   <script src="/js/services/word.js" charset="utf-8"></script>
@@ -122,15 +124,18 @@
 
           <li ng-if="main.hasTool('Clock')" data-gridster-item data-row="2" data-col="0" data-sizex="1" data-sizey="1" ><div class="dg-clock info"></div></li>
           
-          <li ng-if="main.hasTool('Sport')" data-gridster-item data-row="2" data-col="4" data-sizex="1" data-sizey="1" ><div class="headline-sport"><i ng-click="user.guardianSport()" class="fa fa-refresh"></i>guardian | sport <i class="fa fa-minus" ng-click="main.deleteTool('Sport')"></i></div><div class="cont-news"><div class="container info"><div class="dg-GSport info tile" dg-data="user.sport"></div></div></div></li> 
+          <li ng-if="main.hasTool('Sport')" data-gridster-item data-row="2" data-col="4" data-sizex="1" data-sizey="1" ><div class="info tile"><div class="headline-sport"><i ng-click="user.guardianSport()" class="fa fa-refresh"></i>guardian | sport <i class="fa fa-minus" ng-click="main.deleteTool('Sport')"></i></div><div class="cont-news"><div class="dg-GSport" dg-data="user.sport"></div></div></div></li> 
 
-          <li ng-if="main.hasTool('Allnews')" data-gridster-item data-row="3" data-col="0" data-sizex="1" data-sizey="1" ><div class="headline-all"><i ng-click="user.guardianUk()" class="fa fa-refresh"></i>guardian | uk <i class="fa fa-minus" ng-click="main.deleteTool('Allnews')"></i></div><div class="cont-news"><div class="container info"><div class="dg-GAll info tile" dg-data="user.allNews"></div></div></div></li>
+          <li ng-if="main.hasTool('Allnews')" data-gridster-item data-row="3" data-col="0" data-sizex="1" data-sizey="1" ><div class="info tile"><div class="headline-all"><i ng-click="user.guardianUk()" class="fa fa-refresh"></i>guardian | uk <i class="fa fa-minus" ng-click="main.deleteTool('Allnews')"></i></div><div class="cont-news"><div class="dg-GAll" dg-data="user.allNews"></div></div></div></li>
+          <li data-gridster-item data-row="3" data-col="0" data-sizex="1" data-sizey="1" ><div class="info tile"><div class="headline-all"><i ng-click="user.guardianUk()" class="fa fa-refresh"></i>scores <i class="fa fa-minus" ng-click="main.deleteTool('Allnews')"></i></div><div class="cont-news"><div class="dg-Scores" dg-data="user.scores"></div></div></div></li>
 
           <li  ng-if="main.hasTool('bpl')" data-gridster-item data-row="3" data-col="4" data-sizex="3" data-sizey="2" ><div class="tile info"><div class="headline-bpl"><i ng-click="user.table()" class="fa fa-refresh"></i>BPL<i ng-click="main.deleteTool('bpl')" class="fa fa-minus"></i></div><div class="league"><div class="dg-PLeague" dg-data="user.tables"></div></div></div></li>
 
-          <li ng-if="main.hasTool('Note')" data-gridster-item data-row="2" data-col="2" data-sizex="2" data-sizey="1" ><div class="info tile-note"><div class="headline-news">notes<i class="fa fa-minus" ng-click="main.deleteTool('Note')"></i></div><ul class="cont-note">
+          <li ng-if="main.hasTool('Note')" data-gridster-item data-row="2" data-col="2" data-sizex="1" data-sizey="1" ><div class="info tile-note"><div class="headline-news">notes<i class="fa fa-minus" ng-click="main.deleteTool('Note')"></i></div><ul class="cont-note">
             <li class="notes" ng-repeat="note in user.notes track by $index">
-              <p class="notes-text">{{ note.note }}</p>
+              <p class="notes-text">{{ note.note }} <i ng-click="user.deleteNote(note)" class="fa fa-minus"></i></p>
+
+              
             </li>
           </ul><form ng-submit="user.sendNote(main.currentUser._id)" class="form-inline"><div class="form-group"><input ng-model="user.note" class="note"></div><button class="btn btn-secondary-outline add-note">add note</button></form></div></li>
         </ul>
