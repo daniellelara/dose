@@ -111,9 +111,9 @@
         <div class="picture" ng-click="main.backgroundChange('forestTwo')" class="add"><img class="iconpaper" src="./images/forest2.jpg"></div>
         <div class="picture" ng-click="main.backgroundChange('sun')" class="add"><img class="iconpaper" src="./images/sun.jpg"></div>
         <div class="picture" ng-click="main.backgroundChange('night sky')" class="add"><img class="iconpaper" src="./images/nightsky.jpg"></div>
-        <div class="picture" ng-click="main.backgroundChange('night sky')" class="add"><img class="iconpaper" src="{{ main.myImage }}"></div>
+        <div class="picture" ng-click="main.backgroundChange('mine')" class="add"><img class="iconpaper" src="{{ main.myImage }}"></div>
 
-        <div class="picture" class="add"><form ng-submit="main.addPhoto(image)"><div class="form-group"><input ngf-select ng-model="image" type="file" id="exampleInputFile"><button>submit</button></div></form></div>
+        <div class="picture" ng-click="main.backgroundChange('mine')" class="add"><form ng-submit="main.addPhoto(image)"><div class="form-group"><input ngf-select ng-model="image" type="file" id="exampleInputFile"><button>submit</button></div></form></div>
       </div>      
      <!-- change opacity back on close and hide div   --> 
     
@@ -139,7 +139,7 @@
 
           <li ng-if="main.hasTool('scores')" data-gridster-item data-row="3" data-col="6" data-sizex="2" data-sizey="1" ><div class="info tile"><div class="headline-scores"><i ng-click="user.guardianUk()" class="fa fa-refresh"></i>BPL fixtures & scores <i class="fa fa-minus" ng-click="main.deleteTool('scores')"></i></div><div class="league"><div class="dg-Scores" dg-data="user.scores"></div></div></div></li>
           
-          <li  data-gridster-item data-row="3" data-col="9" data-sizex="2" data-sizey="1" ><div class="info tile"><div class="headline-scores"><i ng-click="user.champions()" class="fa fa-refresh"></i>Champions league fixtures & scores <i class="fa fa-minus" ng-click="main.deleteTool('champions')"></i></div><div class="league"><div class="dg-Champions" dg-data="user.scoreC"></div></div></div></li>
+          <li  data-gridster-item data-row="3" data-col="9" data-sizex="1" data-sizey="1" ><div class="info tile"><div class="headline-scores"><i ng-click="user.champions()" class="fa fa-refresh"></i>Champions league fixtures & scores <i class="fa fa-minus" ng-click="main.deleteTool('champions')"></i></div><div class="league"><div class="dg-Champions" dg-data="user.scoreC"></div></div></div></li>
 
           <li  ng-if="main.hasTool('bpl')" data-gridster-item data-row="3" data-col="4" data-sizex="2" data-sizey="1" ><div class="tile info"><div class="headline-bpl"><i ng-click="user.table()" class="fa fa-refresh"></i>BPL<i ng-click="main.deleteTool('bpl')" class="fa fa-minus"></i></div><div class="league"><div class="dg-PLeague" dg-data="user.tables"></div></div></div></li>
 

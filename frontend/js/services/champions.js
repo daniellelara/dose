@@ -11,7 +11,7 @@ function Champions($http) {
         return $http.get('https://api.crowdscores.com/api/v1/matches', {
           params:{ 
             'api_key': '089bcef96b004975805f1c91dcd82538',
-            'from': time,
+            'to': time,
             'competition_id': '36'
 
 

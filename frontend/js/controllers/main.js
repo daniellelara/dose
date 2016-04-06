@@ -82,8 +82,18 @@ function MainController($auth, tokenService, $http, API, $window, toolService, U
     })
 
   }
+this.image = null;
+  self.getImage = function() {
+    $http.get(API + '/'+ self.currentUser._id ).then(function(res){
+      self.image = res.data.wallpaper;
+      self.myImage = S3 + self.image;
+      console.log(self.myImage);
+    })
+  }
+  self.getImage();
 
-  this.myImage = S3 + self.currentUser.wallpaper; 
+   
+  console.log(self.myImage);
 
   this.text = function(tool) {
    document.getElementById(tool).style.opacity = 1;
@@ -117,6 +127,10 @@ function MainController($auth, tokenService, $http, API, $window, toolService, U
     }
     else if (word == "night sky") {
       document.body.style.backgroundImage = "url('/images/nightsky.jpg')";
+      document.body.style.backgroundSize = "cover";
+    }
+    else if (word == "mine") {
+      document.body.style.backgroundImage = "url(" + self.myImage +")";
       document.body.style.backgroundSize = "cover";
     }
   }
