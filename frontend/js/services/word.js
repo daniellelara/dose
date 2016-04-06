@@ -1,5 +1,5 @@
 angular.module('dose')
-  .service('Word', Word);
+  .service('WordService', Word);
 
 Word.$inject = ['$http']; 
 

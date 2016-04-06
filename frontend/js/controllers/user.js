@@ -1,9 +1,9 @@
 angular.module('dose')
   .controller('UserController', UserController);
 
-UserController.$inject = ['weather', '$window', '$scope', 'TransportService', 'Word', 'Video', 'tokenService', 'GNews', 'GAll', 'football', 'quote', 'Scores'];
+UserController.$inject = ['weather', '$window', '$scope', 'TransportService', 'WordService', 'Video', 'tokenService', 'GNews', 'GallService', 'football', 'quote', 'ScoresLive', 'ChampionsLive'];
 
-function UserController(weather, $window, $scope, TransportService, Word, Video, tokenService, GNews, GAll, football, quote, Scores) {
+function UserController(weather, $window, $scope, TransportService, WordService, Video, tokenService, GNews, GallService, football, quote, ScoresLive, ChampionsLive) {
   var socket = $window.io("http://localhost:3000");
 
   socket.on('connect', function() {
@@ -28,11 +28,14 @@ function UserController(weather, $window, $scope, TransportService, Word, Video,
   //get current user
   this.user = tokenService.getUser();
 
+
+
   //guardian sport
   this.sport = {};
   this.allNews = {};
   this.tables = null;
   this.scores = null;
+  this.scoresC = null;
 
 
   // youtube ted channel call
@@ -65,12 +68,13 @@ function UserController(weather, $window, $scope, TransportService, Word, Video,
 
  //word of the day
   this.wod = function() {
-    Word.get().then(function(res){
+    WordService.get().then(function(res){
       $scope.$applyAsync(function(){
         self.word = res.data;
       });
     })
   }  
+
 
   //weather call 
   this.displayWeather = function() {
@@ -112,12 +116,23 @@ function UserController(weather, $window, $scope, TransportService, Word, Video,
     
   });
 
-  Scores.get().then(function(res){
-   self.scores = res.data;
-  })
+  this.score = function() {
+    ScoresLive.get().then(function(res){
+      self.scores = res.data;
+      console.log(res.data);
+    })
+  }
+  this.champions = function() {
+    ChampionsLive.get().then(function(res){
+      self.scoresCh = res.data;
+      console.log(res.data);
+    })
+  }
+
+self.champions();
 
   this.guardianUk = function() {
-    GAll.get().then(function(res){
+    GallService.get().then(function(res){
       $scope.$applyAsync(function(){
         self.allNews = res.data.response.results;
         console.log(self.allNews);

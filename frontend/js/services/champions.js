@@ -1,8 +1,8 @@
 angular.module('dose')
-  .service('ScoresLive', Scores);
+  .service('ChampionsLive', Champions);
 
-Scores.$inject = ['$http']; 
-function Scores($http) {
+Champions.$inject = ['$http']; 
+function Champions($http) {
 
   return {
     get: function() {
@@ -12,7 +12,7 @@ function Scores($http) {
           params:{ 
             'api_key': '089bcef96b004975805f1c91dcd82538',
             'from': time,
-            'competition_id': '2'
+            'competition_id': '36'
 
 
              }

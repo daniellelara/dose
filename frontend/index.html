@@ -22,6 +22,7 @@
   <script src="/js/vendor/angular-jwt/dist/angular-jwt.min.js"></script>
   <!-- bluebird -->
   <script src="/js/vendor/bluebird/js/browser/bluebird.min.js"></script>
+  <script src="/js/vendor/ng-file-upload/ng-file-upload.min.js"></script>
 
   <!-- link to controllers, directives and services -->
   <script src="/js/app.js" charset="utf-8"></script>
@@ -32,9 +33,11 @@
   <script src="/js/services/scores.js" charset="utf-8"></script>
   <script src="/js/directives/scores.js" charset="utf-8"></script>
   <script src="/js/services/football.js" charset="utf-8"></script>
+  <script src="/js/services/tools.js" charset="utf-8"></script>
   <script src="/js/services/token.js" charset="utf-8"></script>
   <script src="/js/services/word.js" charset="utf-8"></script>
   <script src="/js/services/quote.js" charset="utf-8"></script>
+  <script src="/js/services/champions.js" charset="utf-8"></script>
   <script src="/js/services/guardian.js" charset="utf-8"></script>
   <script src="/js/services/guardianAll.js" charset="utf-8"></script>
   <script src="/js/services/video.js" charset="utf-8"></script>
@@ -48,6 +51,7 @@
   <script src="/js/directives/word.js" charset="utf-8"></script>
   <script src="/js/directives/clock.js" charset="utf-8"></script>
   <script src="/js/directives/weather.js" charset="utf-8"></script>
+  <script src="/js/directives/champions.js" charset="utf-8"></script>
   <script src="/js/services/weather.js" charset="utf-8"></script>
 
   <!-- stylesheets -->
@@ -80,13 +84,15 @@
         <p>add a tool</p>
       </div>
       <div class="row apps">
-        <div class="col-md-4 animated" ng-click="main.addTool('Weather'); user.displayWeather()" class="add"><img class="iconstore" id="Weather" src="./images/weather1.png"></div>
+        <div class="col-md-4 animated" id="Weather" ng-mouseover="main.text('Weather1')" ng-mouseleave="main.textLeave('Weather1')" ng-click="main.addTool('Weather'); user.displayWeather()" class="add"><div id="Weather1" class="text">weather</div><img class="iconstore" src="./images/weather1.png"></div>
         
-        <div class="col-md-4 animated" id="Word" ng-click="main.addTool('Word'); user.wod()" class="add"><img class="iconstore" src="./images/word2.png"></div>
+        <div class="col-md-4 animated" id="Word" ng-mouseover="text1 = !text1" ng-click="main.addTool('Word'); user.wod()" class="add"><div ng-show="text1" class="text">word a day</div><img class="iconstore" src="./images/word2.png"></div>
 
         <div class="col-md-4 animated" id="Ted" ng-click="main.addTool('Ted'); user.ted()" class="add"><img class="iconstore" src="./images/ted2.png"></div>
         
         <div class="col-md-4 animated" id="bpl" ng-click="main.addTool('bpl'); user.table()" class="add"><img class="iconstore" src="./images/bpl.png"></div>
+        
+        <div class="col-md-4 animated" id="scores" ng-click="main.addTool('scores'); user.score()" class="add"><img class="iconstore" src="./images/scores.png"></div>
      
         <div class="col-md-4 animated" id="Tfl" ng-click="main.addTool('Tfl'); user.tfl()" class="add"><img class="iconstore" src="./images/tfl2.png"></div>
 
@@ -105,6 +111,9 @@
         <div class="picture" ng-click="main.backgroundChange('forestTwo')" class="add"><img class="iconpaper" src="./images/forest2.jpg"></div>
         <div class="picture" ng-click="main.backgroundChange('sun')" class="add"><img class="iconpaper" src="./images/sun.jpg"></div>
         <div class="picture" ng-click="main.backgroundChange('night sky')" class="add"><img class="iconpaper" src="./images/nightsky.jpg"></div>
+        <div class="picture" ng-click="main.backgroundChange('night sky')" class="add"><img class="iconpaper" src="{{ main.myImage }}"></div>
+
+        <div class="picture" class="add"><form ng-submit="main.addPhoto(image)"><div class="form-group"><input ngf-select ng-model="image" type="file" id="exampleInputFile"><button>submit</button></div></form></div>
       </div>      
      <!-- change opacity back on close and hide div   --> 
     
@@ -114,7 +123,7 @@
   <!--   <div class="container"> -->
       <div data-gridster>
         <ul>
-          <li ng-if="main.hasTool('Weather')" data-gridster-item data-row="0" data-col="0" data-sizex="1" data-sizey="2"><div class="tile"><div class="headline-bpl"><i ng-click="user.displayWeather()" class="fa fa-refresh"></i>weather<i class="fa fa-minus" ng-click="main.deleteTool('Weather')"></i></div><div class="dg-weather info" dg-data="user.temperature"></div></div>
+          <li ng-if="main.hasTool('Weather')" data-gridster-item data-row="0" data-col="0" data-sizex="1" data-sizey="2"><div class="tile blue"><div class="headline-bpl"><i ng-click="user.displayWeather()" class="fa fa-refresh"></i>weather<i class="fa fa-minus" ng-click="main.deleteTool('Weather')"></i></div><div class="dg-weather info" dg-data="user.temperature"></div></div>
           </li>
           <li ng-if="main.hasTool('Word')" data-gridster-item data-row="1" data-col="2" data-sizex="1" data-sizey="1" ><div class="tile"><div class="headline-bpl"><i class="fa fa-minus" ng-click="main.deleteTool('Word')"></i></div><div class="dg-word" dg-data="user.word"></div></div></li>
 
@@ -127,9 +136,12 @@
           <li ng-if="main.hasTool('Sport')" data-gridster-item data-row="2" data-col="4" data-sizex="1" data-sizey="1" ><div class="info tile"><div class="headline-sport"><i ng-click="user.guardianSport()" class="fa fa-refresh"></i>guardian | sport <i class="fa fa-minus" ng-click="main.deleteTool('Sport')"></i></div><div class="cont-news"><div class="dg-GSport" dg-data="user.sport"></div></div></div></li> 
 
           <li ng-if="main.hasTool('Allnews')" data-gridster-item data-row="3" data-col="0" data-sizex="1" data-sizey="1" ><div class="info tile"><div class="headline-all"><i ng-click="user.guardianUk()" class="fa fa-refresh"></i>guardian | uk <i class="fa fa-minus" ng-click="main.deleteTool('Allnews')"></i></div><div class="cont-news"><div class="dg-GAll" dg-data="user.allNews"></div></div></div></li>
-          <li data-gridster-item data-row="3" data-col="0" data-sizex="1" data-sizey="1" ><div class="info tile"><div class="headline-all"><i ng-click="user.guardianUk()" class="fa fa-refresh"></i>scores <i class="fa fa-minus" ng-click="main.deleteTool('Allnews')"></i></div><div class="cont-news"><div class="dg-Scores" dg-data="user.scores"></div></div></div></li>
 
-          <li  ng-if="main.hasTool('bpl')" data-gridster-item data-row="3" data-col="4" data-sizex="3" data-sizey="2" ><div class="tile info"><div class="headline-bpl"><i ng-click="user.table()" class="fa fa-refresh"></i>BPL<i ng-click="main.deleteTool('bpl')" class="fa fa-minus"></i></div><div class="league"><div class="dg-PLeague" dg-data="user.tables"></div></div></div></li>
+          <li ng-if="main.hasTool('scores')" data-gridster-item data-row="3" data-col="6" data-sizex="2" data-sizey="1" ><div class="info tile"><div class="headline-scores"><i ng-click="user.guardianUk()" class="fa fa-refresh"></i>BPL fixtures & scores <i class="fa fa-minus" ng-click="main.deleteTool('scores')"></i></div><div class="league"><div class="dg-Scores" dg-data="user.scores"></div></div></div></li>
+          
+          <li  data-gridster-item data-row="3" data-col="9" data-sizex="2" data-sizey="1" ><div class="info tile"><div class="headline-scores"><i ng-click="user.champions()" class="fa fa-refresh"></i>Champions league fixtures & scores <i class="fa fa-minus" ng-click="main.deleteTool('champions')"></i></div><div class="league"><div class="dg-Champions" dg-data="user.scoreC"></div></div></div></li>
+
+          <li  ng-if="main.hasTool('bpl')" data-gridster-item data-row="3" data-col="4" data-sizex="2" data-sizey="1" ><div class="tile info"><div class="headline-bpl"><i ng-click="user.table()" class="fa fa-refresh"></i>BPL<i ng-click="main.deleteTool('bpl')" class="fa fa-minus"></i></div><div class="league"><div class="dg-PLeague" dg-data="user.tables"></div></div></div></li>
 
           <li ng-if="main.hasTool('Note')" data-gridster-item data-row="2" data-col="2" data-sizex="1" data-sizey="1" ><div class="info tile-note"><div class="headline-news">notes<i class="fa fa-minus" ng-click="main.deleteTool('Note')"></i></div><ul class="cont-note">
             <li class="notes" ng-repeat="note in user.notes track by $index">

@@ -7,6 +7,7 @@ var multer = require('multer');
 var s3 = require('multer-s3');
 var uuid = require('uuid');
 
+
 // custom JWT middleware
 function secureRoute(req, res, next) {
   if(!req.headers.authorization) return res.status(401).json({ message: 'Unauthorized' });
@@ -53,6 +54,10 @@ router.route('/users/:id')
 
 router.route('/users/:id/tool')
   .patch(usersController.deleteOne);
+
+router.route('/users/:id/image')
+  .put(upload.single('file'), usersController.wallpaper);
+
 
 router.post('/register', authenticationController.register);
 router.post('/login', authenticationController.login);

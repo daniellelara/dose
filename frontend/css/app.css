@@ -177,7 +177,8 @@ header {
   transform: translate(-50%,-50%);
   z-index: 1;
   border: 1px solid grey;
-  overflow-y: scroll;
+  overflow: hidden;
+  
 }
 
 #board {
@@ -210,7 +211,7 @@ header {
 }
 
 .news {
-  height: 35px;
+  height: 55px;
   border-radius: 0;
   margin: 0;
   margin-left: 3px;
@@ -221,7 +222,7 @@ header {
 }
 
 .cont-news {
-  height: 600px;
+  height: 500px;
   overflow-y: scroll;
 }
 
@@ -242,6 +243,12 @@ header {
 
 .headline-news {
   background-color: #B5A11A;
+  color: white;
+  text-align: center;
+}
+
+.headline-scores {
+  background-color: #A9DADA;
   color: white;
   text-align: center;
 }
@@ -294,12 +301,12 @@ header {
 
 }  
 .iconstore {
-  height: 50px;
+  height: 55px;
   cursor: pointer;
 }
 
 .iconstore:hover {
-  opacity: 0.6;
+  opacity: 0.4;
 }
 .iconpaper {
   height: 50px;
@@ -319,14 +326,23 @@ header {
   border-bottom: 1px solid grey;
   border-top: 1px solid grey;
   overflow-y: scroll;
+  height: 200px;
 }
 
 .appstwo {
   background-color: rgba(192, 204, 204, 0.8);
   border-bottom: 1px solid grey;
   border-top: 1px solid grey;
+
+  height: 75px;
+  white-space: nowrap;
+
   overflow-x: scroll;
-  height: 100px;
+}
+
+
+.appstwo .picture {
+  display: inline-block;
 }
 
 .crest {
@@ -350,4 +366,18 @@ tr {
 
 .extra {
   height: 41px;
+}
+
+.text {
+  position: absolute;
+  top: 50%;
+  left: 45%;
+  z-index: 2;
+  font-weight: 300;
+  font-size: 14px;
+  opacity: 0;
+}
+
+.blue {
+  background-color: rgba(110, 170, 193, 0.3);
 }

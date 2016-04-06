@@ -2,8 +2,8 @@ angular
   .module('dose')
   .controller('MainController', MainController);
 
-MainController.$inject = ['$auth', 'tokenService', '$http', 'API'];
-function MainController($auth, tokenService, $http, API) {
+MainController.$inject = ['$auth', 'tokenService', '$http', 'API', '$window', 'toolService', 'Upload', 'S3'];
+function MainController($auth, tokenService, $http, API, $window, toolService, Upload, S3) {
 
   var self = this;
 
@@ -18,31 +18,36 @@ function MainController($auth, tokenService, $http, API) {
   //for tools
   
   this.currentUser = tokenService.getUser();
-  this.tools = null;
+  this.tools = toolService.getTools();
+  
+
   
 
   this.authenticate = function(provider) {
     $auth.authenticate(provider)
       .then(function() {
         self.currentUser = tokenService.getUser();
+        self.tools = self.currentUser.tools
+        $window.localStorage.setItem('tools', angular.toJson(self.tools, 'pretty'));
        
       });
   }
 
   this.logout = function() {
     tokenService.removeToken();
+    toolService.removeTools();
     this.currentUser = null;
   }
+
+  
+
 
   //add a tool to dashboard function
   this.addTool = function(tool) {
     $http.patch(API + '/' + self.currentUser._id, { tools: tool })
       .then(function(res) {
-        var tools = self.currentUser.tools
-        tools.push(tool);
-        console.log($('#'+ tool))
+        toolService.addTool(tool);
         $('#'+ tool).addClass('fadeOut');
-        console.log($('#'+ tool))
       });
   }
 
@@ -51,21 +56,41 @@ function MainController($auth, tokenService, $http, API) {
     console.log("i have been clicked", tool);
     $http.patch(API + '/' + self.currentUser._id + '/tool', { tools: tool})
       .then(function(res) {
-        console.log(res);
-        var tools = self.currentUser.tools
-        var index = tools.indexOf(tool);
-        tools.splice(index, 1);
+        toolService.deleteTool(tool);
       });
   }
 
   //function match user tool to tool
   this.hasTool = function(word) {
     if(self.currentUser) {
-      var tools = self.currentUser.tools;
+      var tools = toolService.getTools();
       return (tools.indexOf(word) > -1);
     } else {
       return false;
     }
+  }
+
+  self.addPhoto = function(image) {
+    console.log("working it");
+    console.log(image);
+    Upload.upload({
+      url: API + '/'+ self.currentUser._id +'/image',
+      data: {file: image},
+      method: 'PUT'
+    }).then(function(){
+      console.log("it worked");
+    })
+
+  }
+
+  this.myImage = S3 + self.currentUser.wallpaper; 
+
+  this.text = function(tool) {
+   document.getElementById(tool).style.opacity = 1;
+  } 
+
+  this.textLeave = function(tool) {
+   document.getElementById(tool).style.opacity = 0;
   }
 
   this.setOpacity = function(){

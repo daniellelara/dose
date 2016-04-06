@@ -8,7 +8,8 @@ var userSchema = mongoose.Schema({
   notes: [{ type: mongoose.Schema.ObjectId, ref: 'Note' }],
   picture: String,
   facebookId: String,
-  githubId: String
+  githubId: String,
+  wallpaper: String
 });
 
 // userSchema.set('toJSON', {

@@ -6,7 +6,7 @@ function Clock() {
     restrict: 'C',
     scope: { dgData:'=' },
     replace: true,
-    template: '<canvas id="canvas" width="200" height="200"></canvas>',
+    template: '<canvas id="canvas" width="150" height="150"></canvas>',
     link: function(scope, element, attr) {
       var canvas = document.getElementById("canvas");
       var ctx = canvas.getContext("2d");

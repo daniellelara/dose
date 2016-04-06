@@ -27,8 +27,19 @@ function usersDeleteOne(req, res) {
   });
 }
 
+function usersWallpaper(req, res) {
+  console.log(req.file);
+User.findByIdAndUpdate(req.params.id, { $set:{ wallpaper: req.file.key }}, { new: true }, function(err, user) {
+    console.log(user);
+    if(err) return res.status(500).json({message: err});
+    return res.status(200).json(user);
+  });
+
+}
+
 module.exports = {
   show: usersShow,
   updateOne: usersUpdateOne,
-  deleteOne: usersDeleteOne
+  deleteOne: usersDeleteOne,
+  wallpaper: usersWallpaper
 }
