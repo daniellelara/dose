@@ -1,7 +1,7 @@
 body {
-  background-image: url('/images/sun.jpg');
+  background-image: url('/images/forest.jpg');
   background-size: cover;
-  font-family: 'Oswald', sans-serif;
+  font-family: Helvetica;
 }
 
 ul {
@@ -13,12 +13,55 @@ ul {
   margin-left: 5px;
 }
 
+.logout {
+  margin-top: 20px;
+}
+
 img {
   height: 50px;
   border-radius: 50%;
   float: right;
   margin: 10px;
 }
+
+.brand {
+  height: 100px;
+  float: none;
+  box-shadow: 1px 1px 1px #888888;
+}
+
+
+.facebook, .github, .twitter {
+/*  background-color: white;*/
+  color: white;
+  border-radius: 4px;
+  display: inline-block;
+  font-size: 11px;
+  font-size: 30px;
+}
+
+.facebook:hover, .github:hover, .twitter:hover {
+  color: grey;
+}
+
+/*.facebook {
+  margin-right: 20px;
+}*/
+
+/*.github {
+  margin-left: 20px;
+}*/
+
+.at {
+  color: white;
+  font-size: 24px;
+}
+
+hr {
+  margin: 10px;
+  padding: 0;
+}
+
 
 .tile {
   position: relative;
@@ -27,6 +70,11 @@ img {
   background-color: rgba(255,255,255, 0.3);
   box-shadow: 1px 1px 1px #888888;
 
+}
+
+.logout {
+  background-color: #C0F5F7;
+  border-radius: 4px;
 }
 
 .news-tile {
@@ -135,6 +183,8 @@ header {
   text-align: center;
   margin: 0;
   margin-right: 10px;
+  display:block;
+  margin:auto;
 }
 
 .weather {
@@ -160,6 +210,7 @@ header {
   overflow-y: scroll;
   height: 100px;
   font-weight: 300;
+  color: white;
 }
 .new {
   float: right;
@@ -195,7 +246,8 @@ header {
 .center-login {
   position: absolute;
   width: 300px;
-  background-color: rgba(255, 255, 255, 0.5);
+  /*border: 1px solid white;*/
+  background-color: rgba(189, 185, 185, 0.5);
   height: 200px;
   top:50%;
   left:50%;
@@ -204,8 +256,8 @@ header {
   -webkit-transform: translate(-50%,-50%);
   transform: translate(-50%,-50%);
   z-index: 1;
-  border: 1px solid grey;
   text-align: center;
+  box-shadow: 1px 1px 1px #888888;
 }
 
 .title {
@@ -237,6 +289,10 @@ header {
   width: 150px;
 }*/
 
+a {
+  color: black;
+}
+
 .headline {
   background-color: #45454F;
   color: white;
@@ -267,7 +323,7 @@ header {
 }
 
 .headline-all {
-  background-color: #E8A05C;
+  background-color: #5D5655;
   color: white;
   text-align: center;
 }
@@ -421,15 +477,29 @@ tr {
   cursor: pointer;
 }
 
-label input {
+p input {
   width: 0.1px;
   height: 0.1px;
   opacity: 0;
   overflow: hidden;
-  position: absolute;
+  position: relative;
   z-index: -1;
 }
 
 .add-icon {
   height: 50px;
+}
+
+.another {
+  width: 100%;
+}
+
+.each {
+  font-size: 25px;
+  color: white;
+  margin-top: 20px;
+}
+
+.each:hover {
+  color: grey;
 }

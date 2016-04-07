@@ -2,7 +2,7 @@
 <html ng-app="dose">
 <head>
   <title>Dose Tools</title>
-
+  <link rel="icon" href="/images/dose.png">
   <script src="http://localhost:3000/socket.io/socket.io.js" charset="utf-8"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.2/angular.min.js"></script>
   <!-- angular -->
@@ -65,17 +65,23 @@
   <div ng-controller="MainController as main">
     <header>
       <div ng-show="main.isLoggedIn()">
-        <img ng-src="{{ main.currentUser.picture }}">
-        <p class="name">{{ main.currentUser.name }} | dose</p>
-        <button class="logout name" ng-click="main.logout()"><i class="fa fa-sign-out"></i> Logout</button>
-        <button class="add circle" ng-click="show = !show; main.setOpacity()"><i class="fa fa-plus"></i></button>
+        <img  ng-src="{{ main.currentUser.picture }}">
+        <i class="fa each fa-sign-out name" ng-click="main.logout()"></i>
+        <i class="fa fa-cog each" ng-click="show = !show; main.setOpacity()"></i>
       </div>
     </header>
 
     <div ng-hide="main.isLoggedIn()" class="center-login">
-      <h1 class="title">DOSE</h1>
-      <button class="facebook" ng-click="main.authenticate('facebook')"><i class="fa fa-facebook-square"></i> Sign in with Facebook</button><p>or</p>
-      <button ng-click="main.authenticate('github')" class="github"><i class="fa fa-github-square"></i> Sign in with Github</button>
+      <div class="center">
+        <img  class="brand" src="/images/dose.png">
+      </div>
+      <div class="buttons">
+        <hr/> 
+        <i class="fa fa-facebook-square facebook" ng-click="main.authenticate('facebook')"></i>
+        <i ng-click="main.authenticate('github')" class="fa fa-github-square github"></i>
+        <i class="fa fa-twitter-square twitter"></i>
+      </div>  
+       
     </div>
     <div ng-show="show" class="center-add">
       <div class="top">
@@ -121,11 +127,12 @@
         <div class="add-icon">
           <form ng-submit="main.addPhoto(image)">
             
-              <label>
+              <p>
+              
                 <i class="fa fa-plus"></i>
                 <input ngf-select ng-model="image" type="file" id="exampleInputFile">
-              </label>
-              <button>submit</button>
+              </p>
+              <button>add</button>
             
           </form>
           </div>
@@ -142,7 +149,7 @@
         <!-- weather -->
           <li ng-if="main.hasTool('Weather')" data-gridster-item data-row="0" data-col="0" data-sizex="1" data-sizey="2"><div class="dg-weather" dg-data="user.temperature"></div></li>
 
-          <li ng-if="main.hasTool('Word')" data-gridster-item data-row="1" data-col="2" data-sizex="1" data-sizey="1" ><div class="tile"><div class="headline-bpl"><i class="fa fa-minus" ng-click="main.deleteTool('Word')"></i></div><div class="dg-word" dg-data="user.word"></div></div></li>
+          <li ng-if="main.hasTool('Word')" data-gridster-item data-row="1" data-col="2" data-sizex="1" data-sizey="1" ><div class="tile info"><div class="headline-bpl"><i class="fa fa-minus" ng-click="main.deleteTool('Word')"></i></div><div class="dg-word" dg-data="user.word"></div></div></li>
 
       <!--     tfl status -->
           <li ng-if="main.hasTool('Tfl')" data-gridster-item data-row="1" data-col="1" data-sizex="1" data-sizey="1"><div class="dg-transport" dg-data="user.status"></div></li>
@@ -175,8 +182,8 @@
                   <p class="notes-text">{{ note.note }} <i ng-click="user.deleteNote(note)" class="fa fa-minus note-delete"></i></p></li>
               </ul>
               <form ng-submit="user.sendNote(main.currentUser._id)" class="form-inline">
-                <div class="form-group">
-                  <input ng-model="user.note" class="note">
+                <div class="form-group another">
+                  <input ng-model="user.note" class="note btn-block">
                 </div>
                   <button class="btn btn-secondary-outline btn-block add-note">add note</button>
               </form>
