@@ -13,7 +13,7 @@ function GAll(GallService) {
       GallService.get().then(function(res){
         $scope.$applyAsync(function(){
           $scope.dgData = res.data.response.results;
-          console.log(self.allNews);
+          console.log(res.data.response.results);
         }); 
       })
     }

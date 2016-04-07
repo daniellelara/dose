@@ -363,6 +363,11 @@ tr {
   overflow-y: scroll;
   font-size: 11px;
 }
+.leagueTwo {
+  height: auto;
+  overflow-y: scroll;
+  font-size: 11px;
+}
 
 .extra {
   height: 41px;
@@ -380,4 +385,14 @@ tr {
 
 .blue {
   background-color: rgba(110, 170, 193, 0.3);
+}
+
+.collapse {
+  height: 100px;
+  overflow-y: scroll;
+  display: inherit; 
+}
+
+.fa  {
+  cursor: pointer;
 }

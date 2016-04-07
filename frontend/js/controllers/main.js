@@ -14,9 +14,6 @@ function MainController($auth, tokenService, $http, API, $window, toolService, U
   }
   
   
-  
-  //for tools
-  
   this.currentUser = tokenService.getUser();
   this.tools = toolService.getTools();
   
@@ -77,8 +74,10 @@ function MainController($auth, tokenService, $http, API, $window, toolService, U
       url: API + '/'+ self.currentUser._id +'/image',
       data: {file: image},
       method: 'PUT'
-    }).then(function(){
-      console.log("it worked");
+    }).then(function(res){
+      self.image = res.data.wallpaper;
+      self.myImage = S3 + self.image;
+      console.log("it worked", res);
     })
 
   }
@@ -92,8 +91,20 @@ this.image = null;
   }
   self.getImage();
 
+  this.class = "cont-news";
+  this.icon = 'fa fa-arrow-up';
    
-  console.log(self.myImage);
+  this.collapse = function() {
+    if (self.class === "cont-news"){
+          self.class = "collapse";
+          self.icon = 'fa fa-arrow-down';
+        }
+        else{
+          self.class = "cont-news";
+          self.icon = 'fa fa-arrow-up';
+        }
+    
+  }
 
   this.text = function(tool) {
    document.getElementById(tool).style.opacity = 1;

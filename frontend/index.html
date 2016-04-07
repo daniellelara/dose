@@ -26,7 +26,6 @@
 
   <!-- link to controllers, directives and services -->
   <script src="/js/app.js" charset="utf-8"></script>
-  <script src="/js/models/tool.js" charset="utf-8"></script>
   <script src="/js/services/transport.js" charset="utf-8"></script>
   <script src="/js/controllers/user.js" charset="utf-8"></script>
   <script src="/js/services/oauthKeys.js" charset="utf-8"></script>
@@ -79,8 +78,11 @@
       <button ng-click="main.authenticate('github')" class="github"><i class="fa fa-github-square"></i> Sign in with Github</button>
     </div>
     <div ng-show="show" class="center-add">
+      <div class="top">
       <button class="close" ng-click="main.deleteOpacity(); show = !show"><i class="fa fa-minus"></i></button>
+      </div>
       <div class="head">
+
         <p>add a tool</p>
       </div>
       <div class="row apps">
@@ -103,8 +105,10 @@
         <div class="col-md-4 animated" id="Sport" ng-click="main.addTool('Sport'); user.guardianSport();" class="add"><img class="iconstore" src="./images/guardian2.png"></div>
 
         <div class="col-md-4 animated" id="Allnews" ng-click="main.addTool('Allnews'); user.guardianUk()" class="add"><img class="iconstore" src="./images/weather2.png"></div>
-      </div> 
+    
 
+        <div class="col-md-4 animated" id="champions" ng-click="main.addTool('champions'); user.guardianUk()" class="add"><img class="iconstore" src="./images/champions.png"></div>
+ </div>
       <p>pick a background</p>
       <div class="row appstwo">
         <div class="picture" ng-click="main.backgroundChange('forest')" class="add"><img class="iconpaper" src="./images/forest.jpg"></div>
@@ -133,15 +137,15 @@
 
           <li ng-if="main.hasTool('Clock')" data-gridster-item data-row="2" data-col="0" data-sizex="1" data-sizey="1" ><div class="dg-clock info"></div></li>
           
-          <li ng-if="main.hasTool('Sport')" data-gridster-item data-row="2" data-col="4" data-sizex="1" data-sizey="1" ><div class="info tile"><div class="headline-sport"><i ng-click="user.guardianSport()" class="fa fa-refresh"></i>guardian | sport <i class="fa fa-minus" ng-click="main.deleteTool('Sport')"></i></div><div class="cont-news"><div class="dg-GSport" dg-data="user.sport"></div></div></div></li> 
+          <li ng-if="main.hasTool('Sport')" data-gridster-item data-row="2" data-col="4" data-sizex="1" data-sizey="1" ><div class="info tile"><div class="headline-sport"><i ng-click="user.guardianSport()" class="fa fa-refresh"></i>guardian | sport <i class="fa fa-minus" ng-click="main.deleteTool('Sport')"></i></div><div ng-class="main.class"><div class="dg-GSport" dg-data="user.sport"></div></div><div class="headline-sport"><i ng-click="main.collapse()" ng-class="main.icon"></i></div></div></li> 
 
-          <li ng-if="main.hasTool('Allnews')" data-gridster-item data-row="3" data-col="0" data-sizex="1" data-sizey="1" ><div class="info tile"><div class="headline-all"><i ng-click="user.guardianUk()" class="fa fa-refresh"></i>guardian | uk <i class="fa fa-minus" ng-click="main.deleteTool('Allnews')"></i></div><div class="cont-news"><div class="dg-GAll" dg-data="user.allNews"></div></div></div></li>
+          <li ng-if="main.hasTool('Allnews')" data-gridster-item data-row="3" data-col="0" data-sizex="1" data-sizey="1" ><div class="info tile"><div class="headline-all"><i ng-click="user.guardianUk()" class="fa fa-refresh"></i>guardian | uk <i class="fa fa-minus" ng-click="main.deleteTool('Allnews')"></i></div><div ng-class="main.class"><div class="dg-GAll" dg-data="user.allNews"></div></div><div class="headline-all"><i ng-click="main.collapse()" ng-class="main.icon"></i></div></div></li>
 
           <li ng-if="main.hasTool('scores')" data-gridster-item data-row="3" data-col="6" data-sizex="2" data-sizey="1" ><div class="info tile"><div class="headline-scores"><i ng-click="user.guardianUk()" class="fa fa-refresh"></i>BPL fixtures & scores <i class="fa fa-minus" ng-click="main.deleteTool('scores')"></i></div><div class="league"><div class="dg-Scores" dg-data="user.scores"></div></div></div></li>
           
-          <li  data-gridster-item data-row="3" data-col="9" data-sizex="1" data-sizey="1" ><div class="info tile"><div class="headline-scores"><i ng-click="user.champions()" class="fa fa-refresh"></i>Champions league fixtures & scores <i class="fa fa-minus" ng-click="main.deleteTool('champions')"></i></div><div class="league"><div class="dg-Champions" dg-data="user.scoreC"></div></div></div></li>
+          <li ng-if="main.hasTool('champions')" data-gridster-item data-row="3" data-col="9" data-sizex="2" data-sizey="1" ><div class="info tile"><div class="headline-scores"><i ng-click="user.champions()" class="fa fa-refresh"></i>Champions league fixtures & scores <i class="fa fa-minus" ng-click="main.deleteTool('champions')"></i></div><div class="leagueTwo"><div class="dg-Champions" dg-data="user.scoreC"></div></div></div></li>
 
-          <li  ng-if="main.hasTool('bpl')" data-gridster-item data-row="3" data-col="4" data-sizex="2" data-sizey="1" ><div class="tile info"><div class="headline-bpl"><i ng-click="user.table()" class="fa fa-refresh"></i>BPL<i ng-click="main.deleteTool('bpl')" class="fa fa-minus"></i></div><div class="league"><div class="dg-PLeague" dg-data="user.tables"></div></div></div></li>
+          <li  ng-if="main.hasTool('bpl')" data-gridster-item data-row="3" data-col="4" data-sizex="2" data-sizey="1" ><div class="tile info"><div class="headline-bpl"><i ng-click="user.table()" class="fa fa-refresh"></i>BPL<i ng-click="main.deleteTool('bpl')" class="fa fa-minus"></i></div><div class="league"><div class="dg-PLeague" dg-data="user.tables"></div></div><div class="headline-bpl"><i class="fa fa-arrow-down"></i></div></div></li>
 
           <li ng-if="main.hasTool('Note')" data-gridster-item data-row="2" data-col="2" data-sizex="1" data-sizey="1" ><div class="info tile-note"><div class="headline-news">notes<i class="fa fa-minus" ng-click="main.deleteTool('Note')"></i></div><ul class="cont-note">
             <li class="notes" ng-repeat="note in user.notes track by $index">
