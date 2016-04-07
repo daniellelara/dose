@@ -25,6 +25,7 @@ img {
   height: auto;
 /*  margin: 10px;*/
   background-color: rgba(255,255,255, 0.3);
+  box-shadow: 1px 1px 1px #888888;
 
 }
 
@@ -36,11 +37,14 @@ img {
 
 .tile-note {
     position: relative;
-    /*height: 240px;*/
-  /*  margin: 10px;*/
     background-color: rgba(237,240,15, 0.4);
-    border: 1px solid grey;
+    border: 2px solid #B5A11A;
+    box-shadow: 1px 1px 1px #888888;
 
+}
+
+.premier {
+  border:2px solid #B2A7B9;
 }
 .tab {
   position: absolute;
@@ -130,7 +134,7 @@ header {
   height: 100px;
   text-align: center;
   margin: 0;
-  float: left;
+  margin-right: 10px;
 }
 
 .weather {
@@ -149,11 +153,12 @@ header {
   border-bottom: 1px solid grey;
   background-color: rgba(255, 255, 255, 0.6);
   outline: none;
+  width: 100%;
 }
 
 .cont-note {
   overflow-y: scroll;
-  height: 150px;
+  height: 100px;
   font-weight: 300;
 }
 .new {
@@ -162,6 +167,8 @@ header {
 .add-note {
   padding: 0;
   border-radius: 0;
+  background-color: #B5A11A;
+  color: white;
 }
 
 .center-add {
@@ -221,9 +228,9 @@ header {
   font-size: 11px;
 }
 
-.cont-news {
+.tool-container.open {
   height: 500px;
-  overflow-y: scroll;
+   overflow-y: scroll;
 }
 
 /*.reel {
@@ -358,11 +365,18 @@ tr {
   border-bottom: 1px solid white;
 }
 
-.league {
+.league.open {
   height: 200px;
   overflow-y: scroll;
   font-size: 11px;
 }
+
+.league {
+  height: 100px;
+  overflow-y: scroll;
+  font-size: 11px;
+}
+
 .leagueTwo {
   height: auto;
   overflow-y: scroll;
@@ -383,16 +397,39 @@ tr {
   opacity: 0;
 }
 
+
 .blue {
   background-color: rgba(110, 170, 193, 0.3);
+  border: 2px solid #B2A7B9;
 }
 
-.collapse {
+.note-delete {
+  color: white;
+}
+
+.tool-container {
   height: 100px;
   overflow-y: scroll;
   display: inherit; 
 }
 
+.scores {
+  border: 3px solid #A9DADA;
+}
+
 .fa  {
   cursor: pointer;
+}
+
+label input {
+  width: 0.1px;
+  height: 0.1px;
+  opacity: 0;
+  overflow: hidden;
+  position: absolute;
+  z-index: -1;
+}
+
+.add-icon {
+  height: 50px;
 }

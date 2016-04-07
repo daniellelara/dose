@@ -2,8 +2,8 @@ angular
   .module('dose')
   .controller('MainController', MainController);
 
-MainController.$inject = ['$auth', 'tokenService', '$http', 'API', '$window', 'toolService', 'Upload', 'S3'];
-function MainController($auth, tokenService, $http, API, $window, toolService, Upload, S3) {
+MainController.$inject = ['$auth', 'tokenService', '$http', 'API', '$window', 'toolService', 'Upload', 'S3', '$scope'];
+function MainController($auth, tokenService, $http, API, $window, toolService, Upload, S3, $scope) {
 
   var self = this;
 
@@ -56,6 +56,13 @@ function MainController($auth, tokenService, $http, API, $window, toolService, U
         toolService.deleteTool(tool);
       });
   }
+
+  $scope.$on('removeTool', function(event, tool) {
+    $http.patch(API + '/' + self.currentUser._id + '/tool', { tools: tool})
+      .then(function(res) {
+        toolService.deleteTool(tool);
+      });
+  });
 
   //function match user tool to tool
   this.hasTool = function(word) {

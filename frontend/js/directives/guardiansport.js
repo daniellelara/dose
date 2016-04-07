@@ -1,20 +1,35 @@
 angular.module('dose')
   .directive('dgGSport', GSport);
 
-GSport.$inject = ['GNews'] ; 
-function GSport(GNews) {
+GSport.$inject = ['GNews', '$rootScope'] ; 
+function GSport(GNews, $rootScope) {
   return {
     restrict: 'C',
     scope: { dgData:'=' },
     replace: true,
-    template: '<div class="row status reel" ng-repeat="object in dgData"><div class="col-md-6"><img class="news" src="{{ object.fields.thumbnail }}"></div><div class="col-md-6"><a href="{{ object.webUrl }}" target="_blank"><p class="gtitle">{{ object.webTitle  }}</p></a></div></div></div></div>',
+    templateUrl: '/js/directives/partials/sportnews.html',
     link: function($scope, $elem, attrs) {
+      $scope.open = true;
+
+
+      $scope.remove = function() {
+        $rootScope.$broadcast('removeTool', 'Sport');
+      }
+
+      $scope.toggle = function() {
+        $scope.open = !$scope.open;
+        console.log($scope.open);
+      }
+      $scope.refresh = function() {
+        console.log("working");
       GNews.get().then(function(res){
         $scope.$applyAsync(function(){
             $scope.dgData = res.data.response.results;
         }); 
       })
     }
-  }
+   $scope.refresh();
+      }
+    }
 
-} 
+  } 

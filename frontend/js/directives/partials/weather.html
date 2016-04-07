@@ -1,0 +1,15 @@
+<div class="tile blue">
+  <div class="headline-bpl">
+    <i class="fa fa-refresh" ng-click="refresh()"></i>weather<i class="fa fa-minus" ng-click="remove()"></i>
+  </div>
+  <div class="information"> 
+    <img class="icon" src="http://openweathermap.org/img/w/{{ dgData.icon }}.png">
+    <div class="weather">
+      <h3>{{ dgData.temp }}^C</h3>
+      <p>{{ dgData.description }}</p>
+      <p>{{ dgData.name }}</p>
+    </div>
+  </div>
+  <div class="headline-bpl">.</div>
+</div>
+        

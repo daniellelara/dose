@@ -11,21 +11,14 @@ function UserController(weather, $window, $scope, TransportService, WordService,
   });
 
   var self = this;
-  //for geolocation
   this.lat = 0;
   this.lon = 0;
-  //for weather
   this.temperature = {};
-  //for tfl
   this.status = null;
-  //for wod of the day
   this.word = null;
-  //ted video
   this.video = null;
-  //notes
   self.notes =[];
   self.note = null;
-  //get current user
   this.user = tokenService.getUser();
 
 
@@ -46,25 +39,7 @@ function UserController(weather, $window, $scope, TransportService, WordService,
         console.log(self.video);
       });
     })
-  }   
-
-  // line status call
-  this.tfl = function() {
-    TransportService.get().then(function(res){
-      $scope.$applyAsync(function(){
-
-        self.status = {
-          bakerloo: res.data[0].lineStatuses[0].statusSeverityDescription,
-          central: res.data[1].lineStatuses[0].statusSeverityDescription,
-          district: res.data[3].lineStatuses[0].statusSeverityDescription,
-          hammersmith: res.data[4].lineStatuses[0].statusSeverityDescription,
-          jubilee: res.data[5].lineStatuses[0].statusSeverityDescription,
-          northern: res.data[7].lineStatuses[0].statusSeverityDescription,
-          picadilly: res.data[8].lineStatuses[0].statusSeverityDescription
-        }
-      });
-    })
-  }    
+  }      
 
  //word of the day
   this.wod = function() {
@@ -72,71 +47,6 @@ function UserController(weather, $window, $scope, TransportService, WordService,
       $scope.$applyAsync(function(){
         self.word = res.data;
       });
-    })
-  }  
-
-
-  //weather call 
-  this.displayWeather = function() {
-    weather.get().then(function(res) {
-      $scope.$applyAsync(function(){
-        self.temperature = {
-          temp: res.list[0].temp.day,
-          description: res.list[0].weather[0].description,
-          icon: res.list[0].weather[0].icon,
-          name: res.city.name
-        }
-      });
-    });
-  }   
-
-  //guaridan test for sport
-  this.guardianSport = function() {
-    GNews.get(). then(function(res){
-      $scope.$applyAsync(function(){
-        self.sport = res.data.response.results;
-        console.log("loaded", self.sport)
-      });  
-    })
-  }
-  //bpl table
-  this.table = function() {
-    football.get().then(function(res){
-      $scope.$applyAsync(function(){
-        self.tables = res.data.standing;
-        console.log(res.data.standing);
-      });  
-    });
-  }
-
-  quote.get().then(function(res){
-    
-          console.log(res);
-      
-    
-  });
-
-  this.score = function() {
-    ScoresLive.get().then(function(res){
-      self.scores = res.data;
-      console.log(res.data);
-    })
-  }
-  this.champions = function() {
-    ChampionsLive.get().then(function(res){
-      self.scoresCh = res.data;
-      console.log(res.data);
-    })
-  }
-
-self.champions();
-
-  this.guardianUk = function() {
-    GallService.get().then(function(res){
-      $scope.$applyAsync(function(){
-        self.allNews = res.data.response.results;
-        console.log(self.allNews);
-      }); 
     })
   }  
 

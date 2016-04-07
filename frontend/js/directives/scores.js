@@ -2,20 +2,28 @@
 angular.module('dose')
   .directive('dgScores', Scores);
 
-Scores.$inject = ['ScoresLive'];  
-function Scores(ScoresLive) {
+Scores.$inject = ['ScoresLive', '$rootScope'];  
+function Scores(ScoresLive, $rootScope) {
   return {
     restrict: 'C',
     scope: { dgData:'=' },
     replace: true,
-    template: '<div class="row status" ng-repeat="object in dgData"><div class="col-md-3">{{ object.start | date: "dd-mm-yyyy HH:mm" }}</h4></div><div class="col-md-3">{{ object.awayTeam.name }}</div><div class="col-md-1"> {{ object.awayGoals }}</div><div class="col-md-1"> V </div><div class="col-md-1">{{ object.homeGoals }}</div><div class="col-md-3">{{ object.homeTeam.name }}</div></div></div></div>',
+    templateUrl: '/js/directives/partials/score.html',
     link: function($scope, $elem, attrs) {
+      $scope.remove = function() {
+        $rootScope.$broadcast('removeTool', 'scores');
+      }
+
+  
+      $scope.refresh = function() {
       ScoresLive.get().then(function(res){
         $scope.$applyAsync(function(){
             $scope.dgData = res.data;
             console.log(res.data);
         }); 
       })
+    }
+    $scope.refresh();
     }
   }
 

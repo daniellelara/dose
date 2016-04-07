@@ -1,21 +1,35 @@
 angular.module('dose')
   .directive('dgGAll', GAll);
 
-GAll.$inject =['GallService'];
-function GAll(GallService) {
+GAll.$inject =['GallService', '$rootScope'];
+function GAll(GallService, $rootScope) {
   return {
     restrict: 'C',
     scope: { dgData:'=' },
     replace: true,
-    template: '<div class="row status reel" ng-repeat="object in dgData"><div class="col-md-6"><img class="news" src="{{ object.fields.thumbnail }}"></div><div class="col-md-6"><a href="{{ object.webUrl }}" target="_blank"><p class="gtitle">{{ object.webTitle  }}</p></a></div></div></div></div>',
+    templateUrl: '/js/directives/partials/allnews.html',
     link: function($scope, $elem, attrs) {
+      $scope.open = true;
 
-      GallService.get().then(function(res){
-        $scope.$applyAsync(function(){
-          $scope.dgData = res.data.response.results;
-          console.log(res.data.response.results);
-        }); 
-      })
+
+      $scope.remove = function() {
+        $rootScope.$broadcast('removeTool', 'allNews');
+      }
+
+      $scope.toggle = function() {
+        $scope.open = !$scope.open;
+        console.log($scope.open);
+      }
+      $scope.refresh = function() {
+        console.log("working");
+        GallService.get().then(function(res){
+          $scope.$applyAsync(function(){
+            $scope.dgData = res.data.response.results;
+            console.log(res.data.response.results);
+          }); 
+        })
+      } 
+      $scope.refresh();
     }
   }
 

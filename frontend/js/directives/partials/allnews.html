@@ -1,0 +1,20 @@
+<div class="info tile">
+  <div class="headline-all">
+    <i class="fa fa-refresh" ng-click="refresh()"></i>guardian | uk <i class="fa fa-minus" ng-click="remove()"></i>
+  </div>
+  <div class="tool-container" ng-class="{ open: open }">
+    <div class="row status reel" ng-repeat="object in dgData">
+      <div class="col-md-6">
+        <img class="news" src="{{ object.fields.thumbnail }}">
+      </div>
+      <div class="col-md-6">
+        <p class="gtitle">
+          <a href="{{ object.webUrl }}" target="_blank">{{ object.webTitle }}</a>
+        </p>
+      </div>
+    </div>
+  </div>
+  <div class="headline-all">
+    <i class="fa" ng-class="{ 'fa-arrow-up': open, 'fa-arrow-down': !open }" ng-click="toggle()"></i>
+  </div>
+</div>
