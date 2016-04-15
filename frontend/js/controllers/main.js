@@ -96,7 +96,7 @@ this.image = null;
       console.log(self.myImage);
     })
   }
-  self.getImage();
+  // self.getImage();
 
   this.class = "cont-news";
   this.icon = 'fa fa-arrow-up';
